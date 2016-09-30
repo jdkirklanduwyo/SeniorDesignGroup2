@@ -8,13 +8,14 @@ It contains the following folders:
 
 * **Documents:** Documents describing the project. 
 
+* **Resources:** Resources will be included here, such as helpful websites and the like.
+
 The boiler plate includes a use case template and a sample use case.  Both of these
   are taken from [Cockburn's use cases website][1], which contains many other useful tips
   on writing effective use cases (as does his book).  The use cases are written
   down in [Markdown][2] format. This folder also includes a sample specification document from a real
   software company to serve as an example throughout the project.
 
-* **Resources:** Resources will be included here, such as helpful websites and the like.
 
 
 COSC 4950/5 - Senior Design - Group Name to Come
