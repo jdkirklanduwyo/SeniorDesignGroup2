@@ -16,59 +16,29 @@ Description:
 
 Our planned project is a remote service that will be running on a Raspberry Pi/Arduino or similar hardware that supports interaction with different types of sensors and devices. In addition to this server service, a client application will be designed to provide a streamlined and convenient way for the user to adjust and check the functions of the sensors and devices. We are also considering some Artificial Intelligence options to provide a learning facet to the server to further user convenience and hopefully ultimately remove the human factor from the equation. 
 	
+We will now delve into the following specifics:
 	
 		- Description of Files and Folders
 		- Explain packages and resources
 		- Explain how to look through the repo
 		- Help navigate the repo 
 
-  
-[1]: http://alistair.cockburn.us/Basic+use+case+template "Alistair Cockburn on Use Cases"
-[2]: http://daringfireball.net/projects/markdown/ "Markdown Documentation"
+Our project contains the following files and folders:
 
-Project Boiler Plate for UWyo COSC 4950/5
-=========================================
+* **Documents:** Folder that will contain documents describing the project. 
 
-This is nothing more than a directory structure to use for starting a new project.  
-It contains the following folders:
+* **Source:** Folder that will contain all of our source code. Subdirectories will be organized by programming languages. 
 
-* **Source:** All of our source code. Subdirectories are organized by programming languages. If we end up using an IDE, we may consider starting the project here.
-
-* **Documents:** Documents describing the project. 
+We don't currently have any packages, however we do have a folder from the boiler plate for resources.
 
 * **Resources:** Resources will be included here, such as helpful websites and the like.
 
-The boiler plate includes a use case template and a sample use case.  Both of these
-  are taken from [Cockburn's use cases website][1], which contains many other useful tips
-  on writing effective use cases (as does his book).  The use cases are written
-  down in [Markdown][2] format. This folder also includes a sample specification document from a real
-  software company to serve as an example throughout the project.
+Instructions for looking through the repo:
 
-<<<<<<< HEAD
+* **Documents:* Start by looking through the documents we have prepared to describe our project. This folder currently only has the provided materials from the boiler-plate.
 
+* **Source:* Continue on to the source folder if you wish to see the development of the code. Internal comments on the code will provide further explanation.
 
-COSC 4950/5 - Senior Design - Group Name to Come
-================================================
+* **Resources:** Visit this folder if you are looking for where we got information or ideas from. This will be our base of research and a place to gather all helpful materials for quick look-up.
 
-Group Members:
-	Shaya Wolf
-	Jake Kirkland
-	Kevin Shelton
-	Nate Kuhn
-
-Project Name:
-	////////
-
-Description:
-	//////// A couple of paragraphs ////////
-		- Description of Files and Folders
-		- Explain packages and resources
-		- Explain how to look through the repo
-		- Help navigate the repo 
-
-  
-[1]: http://alistair.cockburn.us/Basic+use+case+template "Alistair Cockburn on Use Cases"
-[2]: http://daringfireball.net/projects/markdown/ "Markdown Documentation"
-=======
-* **Resources:** Resources will be included here, such as helpful websites and the like.
->>>>>>> origin/master
+Navigation of the repo can be reflected with the previous points and will be expanded on when our project isn't empty. 
