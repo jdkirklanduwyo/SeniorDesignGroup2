@@ -39,6 +39,6 @@ Instructions for looking through the repo:
 
 * **Source:** Continue on to the source folder if you wish to see the development of the code. Internal comments on the code will provide further explanation.
 
-* **Resources:** Visit this folder if you are looking for where we got information or ideas from. This will be our base of research and a place to gather all helpful materials for quick look-up.
+* **Resources:** Visit this folder if you are looking for where we got information or ideas from. This will be our base of research and a place to gather all helpful materials for quick look-up. We have a couple of starter resources in this folder. See the README file within the Resources folder for a further description. 
 
 Navigation of the repo can be reflected with the previous points and will be expanded on when our project isn't empty. 
