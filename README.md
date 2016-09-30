@@ -35,9 +35,9 @@ We don't currently have any packages, however we do have a folder from the boile
 
 Instructions for looking through the repo:
 
-* **Documents:* Start by looking through the documents we have prepared to describe our project. This folder currently only has the provided materials from the boiler-plate.
+* **Documents:** Start by looking through the documents we have prepared to describe our project. This folder currently only has the provided materials from the boiler-plate.
 
-* **Source:* Continue on to the source folder if you wish to see the development of the code. Internal comments on the code will provide further explanation.
+* **Source:** Continue on to the source folder if you wish to see the development of the code. Internal comments on the code will provide further explanation.
 
 * **Resources:** Visit this folder if you are looking for where we got information or ideas from. This will be our base of research and a place to gather all helpful materials for quick look-up.
 
