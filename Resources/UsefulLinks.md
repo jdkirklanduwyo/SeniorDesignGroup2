@@ -6,8 +6,8 @@
 
 * [Writing Effective Use Cases](http://alistair.cockburn.us/Use+Cases)
 
-* [Arduino Tutorials] (https://www.arduino.cc/en/Tutorial/HomePage)
-
 * [Getting Started with Arduino](https://www.arduino.cc/en/Guide/HomePage)
+
+* [Arduino Tutorials] (https://www.arduino.cc/en/Tutorial/HomePage)
 
 * [Raspberry Pi Resources](https://www.raspberrypi.org/resources)
