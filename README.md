@@ -3,7 +3,6 @@ COSC 4950 - Senior Design - Heavy Metal Awesome
 
 Group Members:
 
-	-Shaya Wolf
 	-Jake Kirkland
 	-Kevin Shelton
 	-Nate Kuhn
