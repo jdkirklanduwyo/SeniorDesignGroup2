@@ -1,0 +1,9 @@
+<settings>
+    <plant id="1" name="Bean Sprout" light="5" water="3" humid="45" temp="75"/>
+    <plant id="2" name="Houseplant" light="4" water="4" humid="65" temp="70"/>
+    <plant id="3" name="Mushroom" light="2" water="8" humid="85" temp="85"/>
+	<plant>
+		<plant id="1" name="Bean Sprout" light="5" water="3" humid="45" temp="75"/>
+	</plant>
+</settings>
+
