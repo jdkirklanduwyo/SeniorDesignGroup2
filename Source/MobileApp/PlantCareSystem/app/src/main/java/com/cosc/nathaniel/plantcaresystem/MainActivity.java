@@ -52,4 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
+    private String createXML(int id, String name, int light, int water, int humid, int temp){
+        return "<plant id=\"" + id + "\" name=\"" + name + "\" light=\"" + light + "\" water=\""
+                + water + "\" humid=\"" + humid + "\" temp=\"" + temp + "\"/>";
+    }
 }
