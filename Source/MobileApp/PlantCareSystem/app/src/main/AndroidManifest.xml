@@ -18,7 +18,8 @@
         <activity android:name=".currentSensors" />
         <activity android:name=".Settings" />
         <activity android:name=".Database" />
-        <activity android:name=".Water"></activity>
+        <activity android:name=".Water" />
+        <activity android:name=".PrevRead"></activity>
     </application>
 
 </manifest>

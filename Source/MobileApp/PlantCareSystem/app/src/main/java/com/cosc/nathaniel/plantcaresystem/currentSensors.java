@@ -1,5 +1,6 @@
 package com.cosc.nathaniel.plantcaresystem;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,15 +46,51 @@ public class currentSensors extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v.equals(itemWater)){
+            // start PrevRead activity
+            try {
+                Intent in = new Intent(v.getContext(), PrevRead.class);
+                in.putExtra("SENSOR", "Water"); //pass which sensor to get readings from
+                startActivity(in);
+            } catch (Exception e) {
+                Log.e("currentSensors", "Failed to launch new activity.");
+            }
+
             Log.e("Clicked: ", "WATER");
         }
         else if (v.equals(itemLight)){
+            // start PrevRead activity
+            try {
+                Intent in = new Intent(v.getContext(), PrevRead.class);
+                in.putExtra("SENSOR", "Light"); //pass which sensor to get readings from
+                startActivity(in);
+            } catch (Exception e) {
+                Log.e("currentSensors", "Failed to launch new activity.");
+            }
+
             Log.e("Clicked: ", "LIGHT");
         }
         else if (v.equals(itemTemp)){
+            // start PrevRead activity
+            try {
+                Intent in = new Intent(v.getContext(), PrevRead.class);
+                in.putExtra("SENSOR", "Temperature"); //pass which sensor to get readings from
+                startActivity(in);
+            } catch (Exception e) {
+                Log.e("currentSensors", "Failed to launch new activity.");
+            }
+
             Log.e("Clicked: ", "TEMP");
         }
         else if (v.equals(itemHumidity)){
+            // start PrevRead activity
+            try {
+                Intent in = new Intent(v.getContext(), PrevRead.class);
+                in.putExtra("SENSOR", "Humidity"); //pass which sensor to get readings from
+                startActivity(in);
+            } catch (Exception e) {
+                Log.e("currentSensors", "Failed to launch new activity.");
+            }
+
             Log.e("Clicked: ", "HUMIDITY");
         }
 
