@@ -1,8 +1,8 @@
 <settings>
     <planttype>
-	    <ptype id="1" name="Bean Sprout" light="5" water="3" humid="45" temp="75" family="bean" size="8-12in" 
+		<ptype id="1" name="Bean Sprout" light="5" water="3" humid="45" temp="75" family="bean" size="8-12in" 
 			   foliage="leafy" foliagecolor="3" heatzone="2" lightrange="1" soilr="2-4" waterr="4-6" fertilizer="6"/>
-	    <ptype id="2" name="Houseplant" light="4" water="4" humid="65" temp="70" family="fern" size="24-46in" 
+		<ptype id="2" name="Houseplant" light="4" water="4" humid="65" temp="70" family="fern" size="24-46in" 
 			   foliage="leafy" foliagecolor="4" heatzone="2" lightrange="1" soilr="1-4" waterr="6-7" fertilizer="7"/>
 		<ptype id="3" name="Mushroom" light="2" water="8" humid="85" temp="85" family="fungus" size="2-4in" 
 			   foliage="fungus" foliagecolor="8" heatzone="4" lightrange="0" soilr="3-3" waterr="7-8" fertilizer="4"/>
