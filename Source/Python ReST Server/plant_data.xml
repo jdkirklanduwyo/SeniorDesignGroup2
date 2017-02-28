@@ -1,5 +1,5 @@
 <settings>
-    <planttype>
+	<planttype>
 		<ptype id="1" name="Bean Sprout" light="5" water="3" humid="45" temp="75" family="bean" size="8-12in" 
 			   foliage="leafy" foliagecolor="3" heatzone="2" lightrange="1" soilr="2-4" waterr="4-6" fertilizer="6"/>
 		<ptype id="2" name="Houseplant" light="4" water="4" humid="65" temp="70" family="fern" size="24-46in" 
