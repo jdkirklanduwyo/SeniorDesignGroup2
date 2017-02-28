@@ -1,4 +1,4 @@
-<settings>
+<data>
 	<planttype>
 		<ptype id="1" name="Bean Sprout" light="5" water="3" humid="45" temp="75" family="bean" size="8-12in" 
 			   foliage="leafy" foliagecolor="3" heatzone="2" lightrange="1" soilr="2-4" waterr="4-6" fertilizer="6"/>
@@ -8,15 +8,15 @@
 			   foliage="fungus" foliagecolor="8" heatzone="4" lightrange="0" soilr="3-3" waterr="7-8" fertilizer="4"/>
 	</planttype>
 	<activeplants>
-		<plant id="1" name="Bean Sprout" light="5" water="3" humid="45" temp="75" health="97"/>
-		<plant id="2" name="Bean Sprout" light="5" water="3" humid="44" temp="76" health="95"/>
-		<plant id="3" name="Bean Sprout" light="5" water="3" humid="43" temp="77" health="96"/>
-		<plant id="4" name="Bean Sprout" light="0" water="3" humid="44" temp="78" health="84"/>
-		<plant id="5" name="Bean Sprout" light="0" water="3" humid="45" temp="79" health="82"/>
-		<plant id="6" name="Bean Sprout" light="0" water="3" humid="44" temp="80" health="81"/>
-		<plant id="7" name="Bean Sprout" light="5" water="0" humid="43" temp="81" health="72"/>
-		<plant id="8" name="Bean Sprout" light="5" water="0" humid="44" temp="82" health="73"/>
-		<plant id="9" name="Bean Sprout" light="5" water="0" humid="45" temp="83" health="77"/>
+		<plant id="1" ptype="1" light="5" water="3" humid="45" temp="75" health="97"/>
+		<plant id="2" ptype="1" light="5" water="3" humid="44" temp="76" health="95"/>
+		<plant id="3" ptype="1" light="5" water="3" humid="43" temp="77" health="96"/>
+		<plant id="4" ptype="1" light="0" water="3" humid="44" temp="78" health="84"/>
+		<plant id="5" ptype="1" light="0" water="3" humid="45" temp="79" health="82"/>
+		<plant id="6" ptype="1" light="0" water="3" humid="44" temp="80" health="81"/>
+		<plant id="7" ptype="1" light="5" water="0" humid="43" temp="81" health="72"/>
+		<plant id="8" ptype="1" light="5" water="0" humid="44" temp="82" health="73"/>
+		<plant id="9" ptype="1" light="5" water="0" humid="45" temp="83" health="77"/>
 	</activeplants>
-</settings>
+</data>
 
