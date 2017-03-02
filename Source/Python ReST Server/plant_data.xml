@@ -1,18 +1,19 @@
 <data>
-	<planttype id="4">
-		<ptype family="bean" fertilizer="6" foliage="leafy" foliagecolor="3" heatzone="2" humid="45" id="1" light="5" lightrange="1" name="BeanSprout" size="8-12in" soilr="2-4" temp="75" water="3" waterr="4-6" />
+	<planttype id="5">
+		<ptype family="bean" fertilizer="6" foliage="leafy" foliagecolor="4" heatzone="2" humid="45" id="1" light="4" lightrange="1" name="BeanSprout" size="8-12in" soilr="2-4" temp="78" water="3" waterr="4-6" />
 		<ptype family="fern" fertilizer="7" foliage="leafy" foliagecolor="4" heatzone="2" humid="65" id="2" light="4" lightrange="1" name="Houseplant" size="24-46in" soilr="1-4" temp="70" water="4" waterr="6-7" />
 		<ptype family="fungus" fertilizer="4" foliage="fungus" foliagecolor="8" heatzone="4" humid="85" id="3" light="2" lightrange="0" name="Mushroom" size="2-4in" soilr="3-3" temp="85" water="8" waterr="7-8" />
-	</planttype>
-	<activeplants id="11">
+	<ptype family="lettuce" fertilizer="6" foliage="leafy" foliagecolor="4" heatzone="12" humid="55" id="4" light="5" lightrange="1" name="PurpleLettuce" size="6-8in" soilr="2-4" temp="79" water="3" waterr="4-6" /></planttype>
+	<activeplants id="12">
 		<plant health="97" humid="45" id="1" light="5" ptype="1" temp="75" water="3" />
 		<plant health="95" humid="44" id="2" light="5" ptype="1" temp="76" water="3" />
 		<plant health="96" humid="43" id="3" light="5" ptype="1" temp="77" water="3" />
-		<plant health="84" humid="44" id="4" light="0" ptype="1" temp="78" water="3" />
+		<plant health="78" humid="4" id="4" light="4" ptype="1" temp="5" water="3" />
 		<plant health="82" humid="45" id="5" light="0" ptype="1" temp="79" water="3" />
 		<plant health="81" humid="44" id="6" light="0" ptype="1" temp="80" water="3" />
 		<plant health="90" humid="40" id="7" light="4" ptype="1" temp="70" water="4" />
 		<plant health="73" humid="44" id="8" light="5" ptype="1" temp="82" water="0" />
 		<plant health="77" humid="45" id="9" light="5" ptype="1" temp="83" water="0" />
-	<plant health="96" humid="44" id="10" light="5" ptype="1" temp="84" water="3" /></activeplants>
+	<plant health="96" humid="44" id="10" light="5" ptype="1" temp="84" water="3" /><plant health="96" humid="44" id="11" light="5" ptype="1" temp="84" water="3" /></activeplants>
+	<curplant health="92" humid="45" id="2" light="4" ptype="1" temp="75" water="4" />
 </data>
