@@ -13,9 +13,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    static String SERV_IP = "192.168.0.30";
     // button variables
     Button btnSettings, btnSensors, btnDatabase;
     TextView txtRating;
+    ConnectTask connection = new ConnectTask();
+    AsyncCoordinator coord = new AsyncCoordinator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +35,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDatabase.setOnClickListener(this);
 
         //set rating text
-        Double ratingNum = getRating();
-        txtRating.setText(Double.toString(ratingNum));
+        int ratingNum = getRating();
+        txtRating.setText(Integer.toString(ratingNum) + "%");
         //set color of text to indicate rating
         txtRating.setTextColor(
-                ratingNum > 7.5 ? Color.GREEN :
-                        ratingNum > 5 ? Color.YELLOW : Color.RED
+                ratingNum > 75 ? Color.GREEN :
+                        ratingNum > 50 ? Color.YELLOW : Color.RED
         );
 
+        //connection.execute(SERV_IP);
     }
 
     @Override
@@ -55,7 +59,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if (v.equals(btnSettings)){
             //test of notification display
-            createNotification();
+            //createNotification();
+            //test of server connection
+            connection.execute(SERV_IP);
+
 
             try {
                 Intent in = new Intent(v.getContext(), Settings.class);
@@ -90,8 +97,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         notificationManager.notify(0, mBuilder.build());
     }
 
-    private double getRating(){
+    private int getRating(){
         //TODO get rating from server
-        return 6.2;
+        return 62;
     }
 }
