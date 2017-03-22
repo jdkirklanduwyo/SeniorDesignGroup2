@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private double getRating(){
         //TODO get rating from server
-        return 6.2;
+        createNotification();
+        return 8.2;
     }
 }
