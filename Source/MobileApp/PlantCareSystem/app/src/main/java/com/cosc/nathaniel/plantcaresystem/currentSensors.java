@@ -13,8 +13,6 @@ public class currentSensors extends AppCompatActivity implements View.OnClickLis
     LinearLayout itemWater, itemLight, itemTemp, itemHumidity;
     TextView readWater, readLight, readTemp, readHumidity;
 
-    int waterLevel = 1, lightLevel = 2, tempLevel = 3, humLevel = 4;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,16 +28,16 @@ public class currentSensors extends AppCompatActivity implements View.OnClickLis
         itemHumidity.setOnClickListener(this);
 
         readWater = (TextView) findViewById(R.id.readWater);
-        String level = Integer.toString(waterLevel);
+        String level = getLevel("water");
         readWater.setText(level.toCharArray(), 0, level.length());
         readLight = (TextView) findViewById(R.id.readLight);
-        level = Integer.toString(lightLevel);
+        level = getLevel("light");
         readLight.setText(level.toCharArray(), 0, level.length());
         readTemp = (TextView) findViewById(R.id.readTemp);
-        level = Integer.toString(tempLevel);
+        level = getLevel("temp");
         readTemp.setText(level.toCharArray(), 0, level.length());
         readHumidity = (TextView) findViewById(R.id.readHumidity);
-        level = Integer.toString(humLevel);
+        level = getLevel("humid");
         readHumidity.setText(level.toCharArray(), 0, level.length());
     }
 
@@ -52,10 +50,10 @@ public class currentSensors extends AppCompatActivity implements View.OnClickLis
                 in.putExtra("SENSOR", "Water"); //pass which sensor to get readings from
                 startActivity(in);
             } catch (Exception e) {
-                Log.e("currentSensors", "Failed to launch new activity.");
+                Log.e("DEBUG", "Failed to launch new activity.");
             }
 
-            Log.e("Clicked: ", "WATER");
+            Log.e("DEBUG", "WATER");
         }
         else if (v.equals(itemLight)){
             // start PrevRead activity
@@ -64,10 +62,10 @@ public class currentSensors extends AppCompatActivity implements View.OnClickLis
                 in.putExtra("SENSOR", "Light"); //pass which sensor to get readings from
                 startActivity(in);
             } catch (Exception e) {
-                Log.e("currentSensors", "Failed to launch new activity.");
+                Log.e("DEBUG", "Failed to launch new activity.");
             }
 
-            Log.e("Clicked: ", "LIGHT");
+            Log.e("DEBUG", "LIGHT");
         }
         else if (v.equals(itemTemp)){
             // start PrevRead activity
@@ -76,10 +74,10 @@ public class currentSensors extends AppCompatActivity implements View.OnClickLis
                 in.putExtra("SENSOR", "Temperature"); //pass which sensor to get readings from
                 startActivity(in);
             } catch (Exception e) {
-                Log.e("currentSensors", "Failed to launch new activity.");
+                Log.e("DEBUG", "Failed to launch new activity.");
             }
 
-            Log.e("Clicked: ", "TEMP");
+            Log.e("DEBUG", "TEMP");
         }
         else if (v.equals(itemHumidity)){
             // start PrevRead activity
@@ -88,11 +86,15 @@ public class currentSensors extends AppCompatActivity implements View.OnClickLis
                 in.putExtra("SENSOR", "Humidity"); //pass which sensor to get readings from
                 startActivity(in);
             } catch (Exception e) {
-                Log.e("currentSensors", "Failed to launch new activity.");
+                Log.e("DEBUG", "Failed to launch new activity.");
             }
 
-            Log.e("Clicked: ", "HUMIDITY");
+            Log.e("DEBUG", "HUMIDITY");
         }
 
+    }
+
+    private String getLevel(String key){
+        return ConnectionMethods.parseData(ConnectionMethods.queryServer(ConnectionMethods.Q_CURRENT), key);
     }
 }

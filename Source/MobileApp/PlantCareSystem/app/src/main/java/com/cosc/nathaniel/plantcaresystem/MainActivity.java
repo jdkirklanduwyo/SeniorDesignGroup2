@@ -13,12 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    static String SERV_IP = "192.168.0.30";
     // button variables
     Button btnSettings, btnSensors, btnDatabase;
     TextView txtRating;
-    ConnectTask connection = new ConnectTask();
-    AsyncCoordinator coord = new AsyncCoordinator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,28 +39,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ratingNum > 75 ? Color.GREEN :
                         ratingNum > 50 ? Color.YELLOW : Color.RED
         );
-
-        //connection.execute(SERV_IP);
     }
 
     @Override
     public void onClick(View v) {
         //check which button clicked
         if (v.equals(btnSensors)){
+            Log.e("DEBUG", "-------------debug point 1");
             try {
+                Log.e("DEBUG", "-------------debug point 2");
                 Intent in = new Intent(v.getContext(), currentSensors.class);
+                Log.e("DEBUG", "-------------debug point 3");
                 startActivity(in);
             } catch (Exception e) {
                 Log.e("MainActivity", "Failed to launch new activity.");
             }
         }
         else if (v.equals(btnSettings)){
-            //test of notification display
-            //createNotification();
-            //test of server connection
-            connection.execute(SERV_IP);
-
-
             try {
                 Intent in = new Intent(v.getContext(), Settings.class);
                 startActivity(in);
@@ -98,7 +90,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private int getRating(){
-        //TODO get rating from server
-        return 62;
+        //get health rating of current plant from server
+        String rating = ConnectionMethods.parseData(ConnectionMethods.queryServer(ConnectionMethods.Q_CURRENT), "health");
+        return Integer.parseInt(rating);
     }
+
+
 }

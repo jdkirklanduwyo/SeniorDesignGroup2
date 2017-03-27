@@ -3,48 +3,36 @@ package com.cosc.nathaniel.plantcaresystem;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class ConnectTask extends AsyncTask<String, MySocket, MySocket>{
-
-    private MySocket sock = new MySocket();
-    private AsyncCoordinator coord = new AsyncCoordinator();
-    private boolean done = false;
+public class ConnectTask extends AsyncTask<String, String, String>{
 
     @Override
-    protected MySocket doInBackground(String... params) {
+    protected String doInBackground(String... params) {
 
-        // from http://stackoverflow.com/questions/35886537/how-to-build-rest-client-in-android-using-httpurlconnection
+        String respStr = "";
+        // adapted from http://stackoverflow.com/questions/35886537/how-to-build-rest-client-in-android-using-httpurlconnection
         URL url;
         HttpURLConnection urlConnection = null;
         try {
             //open connection to url
-            url = new URL("http://" + params[0] + ":8080");
-            //url = new URL("http://www.google.com");
+            url = new URL("http://" + params[0]);
             urlConnection = (HttpURLConnection) url
                     .openConnection();
+            urlConnection.connect();
 
-            //initialize streams
-            OutputStream out = urlConnection.getOutputStream();
+            //initialize input stream and stream reader
             InputStream in = urlConnection.getInputStream();
-
-            //write request to server
-            String req = "/plant/1";
-            out.write(req.getBytes());
-
-            //get server response
             InputStreamReader isw = new InputStreamReader(in);
 
-            //parse response
+            //get server response
             int data = isw.read();
-            String respStr = "";
+
+            //parse response
             while (data != -1) {
                 char current = (char) data;
                 data = isw.read();
@@ -52,19 +40,23 @@ public class ConnectTask extends AsyncTask<String, MySocket, MySocket>{
             }
 
             //send response to log
-            Log.e("RESPONSE", respStr);
+            Log.e("DEBUG", "Server response is " + respStr);
 
         } catch (Exception e) {
+            Log.e("DEBUG", "Error in try connection in ConnectTask");
             e.printStackTrace();
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
+                Log.e("DEBUG", "disconnected");
             }
         }
 
-        return sock;
+        return respStr;
     }
 
+    //Probably extraneous but I left it for now just in case
     //method to pass coordinator object to main activity
-    public AsyncCoordinator getCoord(){return coord;}
+    //private AsyncCoordinator coord = new AsyncCoordinator();
+    //public AsyncCoordinator getCoord(){return coord;}
 }
