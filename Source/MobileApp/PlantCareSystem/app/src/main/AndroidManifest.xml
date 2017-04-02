@@ -21,7 +21,8 @@
         <activity android:name=".Settings" />
         <activity android:name=".Database" />
         <activity android:name=".Water" />
-        <activity android:name=".PrevRead"></activity>
+        <activity android:name=".PrevRead" />
+        <activity android:name=".AddPlant"></activity>
     </application>
 
 </manifest>

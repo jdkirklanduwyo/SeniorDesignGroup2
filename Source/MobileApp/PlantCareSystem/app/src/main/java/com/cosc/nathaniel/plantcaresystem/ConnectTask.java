@@ -40,15 +40,15 @@ public class ConnectTask extends AsyncTask<String, String, String>{
             }
 
             //send response to log
-            Log.e("DEBUG", "Server response is " + respStr);
+            //Log.e("DEBUG", "Server response is " + respStr);
 
         } catch (Exception e) {
-            Log.e("DEBUG", "Error in try connection in ConnectTask");
+            //Log.e("DEBUG", "Error in try connection in ConnectTask");
             e.printStackTrace();
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
-                Log.e("DEBUG", "disconnected");
+                //Log.e("DEBUG", "disconnected");
             }
         }
 

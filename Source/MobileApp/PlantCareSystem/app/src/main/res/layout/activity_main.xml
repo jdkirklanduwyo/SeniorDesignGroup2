@@ -43,11 +43,41 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:text="Plant Database"
+        android:id="@+id/btnAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnDatabase"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="Add Plant" />
+
+    <Button
+        android:id="@+id/btnRight"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="&gt;" />
+
+    <Button
+        android:id="@+id/btnLeft"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnRight"
+        android:layout_alignBottom="@+id/btnRight"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="&lt;" />
+
+    <TextView
+        android:id="@+id/txtPlant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Plant 1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
 </RelativeLayout>
