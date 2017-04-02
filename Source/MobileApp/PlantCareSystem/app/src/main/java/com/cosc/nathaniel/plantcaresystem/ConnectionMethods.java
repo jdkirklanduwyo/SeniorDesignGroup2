@@ -67,4 +67,8 @@ public class ConnectionMethods {
     static public int getNumOfPlants(){ return numOfPlants; }
 
     static public void setNumOfPlants(int numAdded){ numOfPlants += numAdded; }
+
+    static public void setIP(String newIP){
+        servIP = newIP;
+    }
 }
