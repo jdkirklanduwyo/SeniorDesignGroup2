@@ -1,4 +1,4 @@
-COSC 4950 - Senior Design - Heavy Metal Awesome
+COSC 4950 - Senior Design - The Power of Robotany
 ================================================
 
 Group Members:
