@@ -20,7 +20,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
         btn.setOnClickListener(this);
         etIP = (EditText) findViewById(R.id.etIP);
 
-        //TODO other three fields
+        //TODO notification number
     }
 
     @Override

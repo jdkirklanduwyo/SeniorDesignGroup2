@@ -16,7 +16,7 @@ import java.util.List;
 public class AddPlant extends AppCompatActivity implements View.OnClickListener {
 
     Button btnAdd;
-    EditText etLight, etWater, etHumid, etTemp, etHealth;
+    //EditText etLight, etWater, etHumid, etTemp, etHealth;
     Spinner spType;
 
     @Override
@@ -27,11 +27,11 @@ public class AddPlant extends AppCompatActivity implements View.OnClickListener 
         btnAdd = (Button) findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(this);
 
-        etLight = (EditText) findViewById(R.id.editLight);
+        /*etLight = (EditText) findViewById(R.id.editLight);
         etWater = (EditText) findViewById(R.id.editWater);
         etHumid = (EditText) findViewById(R.id.editHumid);
         etTemp = (EditText) findViewById(R.id.editTemp);
-        etHealth = (EditText) findViewById(R.id.editHealth);
+        etHealth = (EditText) findViewById(R.id.editHealth);*/
 
         spType = (Spinner) findViewById(R.id.spinnerType);
         List<String> spinnerArray =  ConnectionMethods.getTypeList();
@@ -43,19 +43,19 @@ public class AddPlant extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         String ptype = Integer.toString(spType.getSelectedItemPosition() + 1);
-        String light = etLight.getText().toString();
+        /*String light = etLight.getText().toString();
         String water = etWater.getText().toString();
         String humid = etHumid.getText().toString();
         String temp = etTemp.getText().toString();
-        String health = etHealth.getText().toString();
+        String health = etHealth.getText().toString();*/
 
         ConnectionMethods.queryServer(ConnectionMethods.Q_ADD_PLANT +
             ptype + " " +
-            light + " " +
-            water + " " +
-            humid + " " +
-            temp + " " +
-            health
+            10 + " " +
+            10 + " " +
+            10 + " " +
+            10 + " " +
+            100
         );
 
         ConnectionMethods.setNumOfPlants(1);
