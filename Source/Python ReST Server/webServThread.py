@@ -7,52 +7,52 @@ tree = ET.parse('plant_data.xml')
 root = tree.getroot()
 
 urls = (
-    #All Plant Types
-    '/data/types', 'plant_types',
-    #All Plants
+    #This is standard request format: /plants
     '/plants', 'all_plants',
-    #This is standard request format: /data/id#
-    '/data/(.*)', 'get_type',
     #This is standard request format: /plant/id#
     '/plant/(.*)', 'get_plant',
     #This is standard request format: /current
     '/current', 'cur_plant',
-    #This is standard request format: /add/plant/ptype light water humid temp health
-    #                            E.G: host:8080/add/plant/1 4 3 45 78 100
+    #This is standard request format: /plantcount
+    '/plantcount', 'plant_count',
+    #This is standard request format: /add/plant/name lightSens waterSens humidSens tempSens health waterTimer foliageColor inTraining
+    #                            E.G: host:8080/add/plant/Bean1 4 3 45 78 100 4560 5 1
     '/add/plant/(.*)', 'add_plant',
-    #This is standard request format (No Spaces in categories): /add/type/name light water humid temp family size foliage foliagecolor heatzone lightrange soilrange waterrange fertilizer
-    #                            E.G: host:8080/add/type/BeanSprout 4 3 45 78 bean 8-12in leafy 3 2 1 2-4 4-6 6
-    '/add/type/(.*)', 'add_type',
-    #This is standard request format: /update/id ptype light water humid temp health
-    #                            E.G: host:8080/update/plant/7 1 4 3 45 78 100
+    #This is standard request format: /update/id lightS waterS humidS tempS health inTraining
+    #                            E.G: host:8080/update/plant/7 4 3 45 78 100 1
     '/update/plant/(.*)', 'update_plant',
-    #This is standard request format: /update/id name light water humid temp family size foliage foliagecolor heatzone lightrange soilrange waterrange fertilizer
-    #                            E.G: host:8080/update/type/1 BeanSprout 4 3 45 78 bean 8-12in leafy 3 2 1 2-4 4-6 6
-    '/update/type/(.*)', 'update_type',
-    #This is standard request format: /update/current/id ptype light water humid temp health
-    #                            E.G: host:8080/update/current/7 1 4 3 45 78 100
-    #Only update current AFTER plants have been updated to prevent differing data
+    #This is standard request format: /update/current/id lightS waterS humidS tempS health inTraining
+    #                            E.G: host:8080/update/current/7 4 3 45 78 100 1
     '/update/current/(.*)', 'update_current',
-    #TODO: Remove Plant and Type
+    #This is standard request format: /update/foliage/id val
+    #                            E.G: host:8080/update/foliage/2 4
+    '/update/foliage/(.*)', 'update_foliage',
+    #This is standard request format: /update/waterTimer/id val
+    #                            E.G: host:8080/update/waterTimer/2 400
+    '/update/waterTimer/(.*)', 'update_waterTimer',
     #This is standard request format: /remove/plant/id#
     '/remove/plant/(.*)', 'remove_plant',
-    #This is standard request format: /remove/type/id#
-    '/remove/type/(.*)', 'remove_type'
-    
+    #This is standard request format: /current/userscore
+    '/current/userscore', 'cur_uscore',
+    #This is standard request format: /current/userscore/#
+    #User Scores can be as follows: 0=Fine, 1=Needs Water, 2=Needs Light, 3=Bad Temp, 4=Bad Humid
+    '/current/userscore/(.*)', 'change_uscore',
+    #This is standard request format: /settings
+    '/settings', 'sett_report',
+    #This is standard request format: /settings/set/activateWaterFlag activateLightFlag waitFlag
+    #                            E.G: /settings/set/1 1 0
+    '/settings/set/(.*)', 'sett_set',
+    #This is standard request format: /settings/waiting
+    '/settings/waiting', 'sett_wait',
+    #This is standard request format: /settings/waiting/[0(off) or 1(on)]
+    '/settings/waiting/(.*)', 'sett_waitset'
+    #This is standard request format: /pixy/currentBlocks
+    '/pixy/currentBlocks', 'pixy_blocks'
+    #This is standard request format: /pixy/currentBlocks/set/
+    '/pixy/currentBlocks/set/(.*)', 'pixy_set'
 )
 
 app = web.application(urls, globals())
-
-class plant_types:        
-    def GET(self):
-        print 'Plant types'
-        output = 'settings:[';
-        for child in root.findall('planttype'):
-            for childp in child:
-                #print 'childp', childp.tag, childp.attrib
-                output += str(childp.attrib) + ','
-        output += ']';
-        return output
 
 class all_plants:        
     def GET(self):
@@ -64,15 +64,6 @@ class all_plants:
                 output += str(childp.attrib) + ','
         output += ']';
         return output
-        
-class get_type:        
-    def GET(self, type):
-        print 'Get type'
-        output = 'settings:[';
-        for child in root.findall('planttype'):
-            for childp in child:
-                if childp.attrib['id'] == type:
-                    return str(childp.attrib)
 
 class get_plant:
     def GET(self, plant):
@@ -87,6 +78,12 @@ class cur_plant:
         print 'Current plant'
         for child in root.findall('curplant'):
             return str(child.attrib)
+            
+class plant_count:
+    def GET(self):
+        print 'Plant count'
+        for child in root.findall('activeplants'):
+            return len(child.findall('plant'))
 
 class add_plant:
     def GET(self, data):
@@ -94,23 +91,8 @@ class add_plant:
         for child in root.findall('activeplants'):
             npID = int(child.attrib['id'])
             data = map(int, data.split())
-            nRoot = ET.SubElement(child, 'plant', attrib={'id':str(npID), 'ptype':str(data[0]), 'light':str(data[1]), 'water':str(data[2]), 'humid':str(data[3]), 'temp':str(data[4]), 'health':str(data[5])})
+            nRoot = ET.SubElement(child, 'plant', attrib={'id':str(npID), 'name':str(data[0]), 'lightSens':str(data[1]), 'waterSens':str(data[2]), 'humidSens':str(data[3]), 'tempSens':str(data[4]), 'health':str(data[5]), 'waterTimer':200, 'foliageColor':1,'inTraining':1})
             child.set('id', str(npID+1))
-            ET.dump(root)
-            tree.write('plant_data.xml')
-            return 'Success'
-        return 'Failure'
-
-class add_type:
-    def GET(self, data):
-        print 'Add Type'
-        for child in root.findall('planttype'):
-            ntID = int(child.attrib['id'])
-            data = map(str, data.split())
-            #print data
-            nRoot = ET.SubElement(child, 'ptype', attrib={'id':str(ntID), 'name':data[0], 'light':data[1], 'water':data[2], 'humid':data[3], 'temp':data[4], 'family':data[5],
-                'size':data[6], 'foliage':data[7], 'foliagecolor':data[8], 'heatzone':data[9], 'lightrange':data[10], 'soilr':data[11], 'waterr':data[12], 'fertilizer':data[13]})
-            child.set('id', str(ntID+1))
             ET.dump(root)
             tree.write('plant_data.xml')
             return 'Success'
@@ -123,38 +105,38 @@ class update_plant:
         for child in root.findall('activeplants'):
             for childp in child:
                 if childp.attrib['id'] == str(plant[0]):
-                    childp.set('ptype', str(plant[1]))
-                    childp.set('light', str(plant[2]))
-                    childp.set('water', str(plant[3]))
-                    childp.set('humid', str(plant[4]))
-                    childp.set('temp', str(plant[5]))
-                    childp.set('health', str(plant[6]))
+                    childp.set('lightSens', str(plant[1]))
+                    childp.set('waterSens', str(plant[2]))
+                    childp.set('humidSens', str(plant[3]))
+                    childp.set('tempSens', str(plant[4]))
+                    childp.set('health', str(plant[5]))
+                    childp.set('inTraining', str(plant[6]))
+                    tree = ET.ElementTree(root)
+                    tree.write('plant_data.xml')
+                    return 'Success'
+        return 'Failure'
+
+class update_foliage:
+    def GET(self, data):
+        print 'Update foliage'
+        plant = map(int, data.split())
+        for child in root.findall('activeplants'):
+            for childp in child:
+                if childp.attrib['id'] == str(plant[0]):
+                    childp.set('foliageColor', str(plant[1])
                     tree = ET.ElementTree(root)
                     tree.write('plant_data.xml')
                     return 'Success'
         return 'Failure'
         
-class update_type:
+class update_waterTimer:
     def GET(self, data):
-        print 'Update type'
-        type = data.split()
-        for child in root.findall('planttype'):
-            for childp in child:        
-                if childp.attrib['id'] == type[0]:
-                    childp.set('name', type[1])
-                    childp.set('light', type[2])
-                    childp.set('water', type[3])
-                    childp.set('humid', type[4])
-                    childp.set('temp', type[5])
-                    childp.set('family', type[6])
-                    childp.set('size', type[7])
-                    childp.set('foliage', type[8])
-                    childp.set('foliagecolor', type[9])
-                    childp.set('heatzone', type[10])
-                    childp.set('lightrange', type[11])
-                    childp.set('soilr', type[12])
-                    childp.set('waterr', type[13])
-                    childp.set('fertilizer', type[14])
+        print 'Update waterTimer'
+        plant = map(int, data.split())
+        for child in root.findall('activeplants'):
+            for childp in child:
+                if childp.attrib['id'] == str(plant[0]):
+                    childp.set('waterTimer', str(plant[1])
                     tree = ET.ElementTree(root)
                     tree.write('plant_data.xml')
                     return 'Success'
@@ -163,15 +145,15 @@ class update_type:
 class update_current:
     def GET(self, data):
         print 'Update cur plant'
-        plant = data.split()
+        plant = map(int, data.split())
         for child in root.findall('curplant'):
-            child.set('id', plant[0])
-            child.set('ptype', plant[1])
-            child.set('light', plant[2])
-            child.set('water', plant[3])
-            child.set('humid', plant[4])
-            child.set('temp', plant[5])
-            child.set('health', plant[6])
+            child.set('id', str(plant[0]))
+            child.set('lightSens', str(plant[1]))
+            child.set('waterSens', str(plant[2]))
+            child.set('humidSens', str(plant[3]))
+            child.set('tempSens', str(plant[4]))
+            child.set('health', str(plant[5]))
+            child.set('inTraining', str(plant[6]))
             tree = ET.ElementTree(root)
             tree.write('plant_data.xml')
             return 'Success'
@@ -190,20 +172,78 @@ class remove_plant:
                     tree.write('plant_data.xml')
                     return "Success"
             return "Failure"
+            
+class cur_uscore:
+    def GET(self):
+        print 'cur userscore'
+        for child in root.findall('userscore'):
+            return str(child.attrib['score'])
 
-class remove_type:
-    def GET(self, type):
-        print 'remove_type'
-        for child in root.findall('planttype'):
-            for childp in child:
-                if childp.attrib['id'] == type:
-                    child.remove(childp)
-                    tree = ET.ElementTree(root)
-                    tree.write('plant_data.xml')
-                    return "Success"
-            return "Failure"
+class change_uscore:
+    def GET(self, score):
+        print 'change userscore'
+        for child in root.findall('userscore'):
+            child.set('score',score)
+            tree = ET.ElementTree(root)
+            tree.write('plant_data.xml')
+            return 'Success'
+        return 'Failure'
+        
+class sett_report:
+    def GET(self):
+        print 'settings report'
+        for child in root.findall('settings'):
+            return str(child.attrib)
+            
+class sett_set:
+    def GET(self, data):
+        print 'set settings'
+        sett = map(int, data.split())
+        for child in root.findall('settings'):
+            child.set('waterFlag', str(sett[0]))
+            child.set('lightFlag', str(sett[1]))
+            child.set('waitFlag', str(sett[2]))
+            tree = ET.ElementTree(root)
+            tree.write('plant_data.xml')
+            return 'Success'
+        return 'Failure'
+        
+class sett_wait:
+    def GET(self):
+        print 'current waiting setting'
+        for child in root.findall('waiting'):
+            return str(child.attrib['status'])
+            
+class sett_waitset:
+    def GET(self, wait):
+        print 'change waiting setting'
+        for child in root.findall('waiting'):
+            child.set('status',str(wait))
+            tree = ET.ElementTree(root)
+            tree.write('plant_data.xml')
+            return 'Success'
+        return 'Failure'
+        
+        
+class pixy_blocks:
+    def GET(self):
+        print 'pixy blocks'
+        for child in root.findall('pixy'):
+            return str(child.attrib)
+            
+class pixy_set:
+    def GET(self, pixy):
+        print 'set pixy'
+        for child in root.findall('pixy'):
+            child.set('data',str(pixy))
+            tree = ET.ElementTree(root)
+            tree.write('plant_data.xml')
+            return 'Success'
+        return 'Failure'
+
 
 ###############################
+#
 #   This comes from the implementation of
 #   http://machinelearningmastery.com/implement-decision-tree-algorithm-scratch-python/
 #   with modifications by us       
@@ -301,110 +341,96 @@ def predict(node, row):
 			return predict(node['right'], row)
 		else:
 			return node['right']
+            
+#########################################################
 
-#dataset = [[358.0, 75.0, 44.0, 5.0, 0],
-#    [353.0, 76.0, 44.0, 5.0, 0],
-#    [362.0, 77.0, 45.0, 4.0, 0],
-#    [344.0, 75.0, 44.0, 4.0, 0],
-#    [323.0, 45.0, 45.0, 4.0, 1],
-#    [401.0, 77.0, 44.0, 4.0, 0],
-#    [421.0, 75.0, 43.0, 3.0, 0],
-#    [322.0, 90.0, 44.0, 3.0, 1],
-#    [345.0, 76.0, 46.0, 3.0, 0],
-#    [367.0, 75.0, 46.0, 2.0, 1],
-#    [288.0, 80.0, 47.0, 2.0, 1],
-#    [349.0, 78.0, 48.0, 4.0, 0],
-#    [399.0, 79.0, 49.0, 5.0, 0],
-#    [364.0, 75.0, 50.0, 5.0, 0],
-#    [231.0, 75.0, 44.0, 5.0, 1],
-#    [221.0, 75.0, 44.0, 5.0, 1],
-#    [114.0, 75.0, 44.0, 5.0, 1],
-#    [302.0, 75.0, 44.0, 5.0, 0],
-#    [364.0, 88.0, 44.0, 5.0, 1],
-#    [367.0, 94.0, 44.0, 5.0, 1],
-#    [382.0, 71.0, 41.0, 3.0, 0],
-#    [376.0, 75.0, 44.0, 5.0, 0],
-#    [654.0, 75.0, 44.0, 5.0, 1],
-#    [754.0, 75.0, 44.0, 5.0, 1],
-#    [801.0, 75.0, 44.0, 5.0, 1],
-#    [367.0, 75.0, 44.0, 1.0, 0],
-#    [358.0, 75.0, 44.0, 1.0, 0],
-#    [356.0, 75.0, 14.0, 5.0, 1],
-#    [355.0, 75.0, 24.0, 5.0, 1],
-#    [352.0, 75.0, 44.0, 9.0, 1],
-#    [348.0, 75.0, 44.0, 9.0, 1],
-#    [299.0, 86.0, 81.0, 1.9, 1],
-#    [299.0, 69.0, 39.0, 7.0, 1],
-#    [400.0, 77.5, 60.0, 4.0, 0],
-#    [400.0, 77.5, 60.0, 4.0, 0],
-#    [400.0, 77.5, 60.0, 4.0, 0],
-#    [400.0, 77.5, 60.0, 4.0, 0],
-#    [400.0, 77.5, 60.0, 4.0, 0],
-#    [400.0, 77.5, 60.0, 4.0, 0],
-#    [400.0, 77.5, 60.0, 4.0, 0],
-#    [400.0, 77.5, 60.0, 4.0, 0],
-#    [400.0, 77.5, 60.0, 4.0, 0],
-#    [400.0, 77.5, 60.0, 4.0, 0],
-#    [501.0, 86.0, 81.0, 7.0, 1]]
-dataset = [[299.0,-1],
-    [300.0,+5],
-    [400.0,+5],
-    [600.0,+3]]
-#TODO: Create a master list of data with proper classing
+
+
+
+dataset = [[358.0, 75.0, 44.0, 5.0, 1010, 0],
+    [353.0, 76.0, 44.0, 5.0, 1110, 0],
+    [362.0, 77.0, 45.0, 4.0, 1210, 0],
+    [344.0, 75.0, 44.0, 4.0, 1310, 0],
+    [323.0, 75.0, 45.0, 4.0, 1410, 0],
+    [401.0, 77.0, 44.0, 4.0, 1510, 0],
+    [421.0, 75.0, 43.0, 3.0, 1610, 0],
+    [322.0, 77.0, 44.0, 3.0, 1710, 0],
+    [345.0, 76.0, 46.0, 3.0, 1810, 0],
+    [367.0, 75.0, 46.0, 2.0, 1910, 0],
+    [288.0, 80.0, 47.0, 2.0, 2010, 0],
+    [349.0, 78.0, 48.0, 1.0, 2110, 0],
+    [399.0, 79.0, 49.0, 1.0, 2210, 0],
+    [364.0, 75.0, 50.0, 0.0, 2310, 0],
+    [221.0, 75.0, 44.0, 0.0, 110, 1],
+    [114.0, 75.0, 44.0, 0.0, 210, 1],
+    [302.0, 75.0, 44.0, 0.0, 310, 0],
+    [364.0, 88.0, 44.0, 1.0, 410, 3],
+    [367.0, 94.0, 44.0, 1.0, 510, 3],
+    [382.0, 71.0, 41.0, 1.0, 610, 0],
+    [376.0, 75.0, 44.0, 2.0, 710, 0],
+    [367.0, 75.0, 44.0, 2.0, 810, 0],
+    [358.0, 75.0, 44.0, 3.0, 910, 0],
+    [356.0, 75.0, 14.0, 5.0, 1010, 4],
+    [355.0, 75.0, 24.0, 5.0, 1110, 4],
+    [352.0, 75.0, 44.0, 6.0, 1210, 0],
+    [348.0, 75.0, 44.0, 6.0, 1310, 0],
+    [259.0, 86.0, 61.0, 5.9, 1410, 1],
+    [279.0, 69.0, 69.0, 2.0, 1510, 1],
+    [400.0, 77.5, 60.0, 5.0, 1610, 0],
+    [400.0, 77.5, 60.0, 3.0, 1710, 0],
+    [400.0, 77.5, 60.0, 2.0, 1810, 0],
+    [400.0, 77.5, 60.0, 2.0, 1910, 0],
+    [400.0, 77.5, 60.0, 2.0, 2010, 0],
+    [400.0, 77.5, 60.0, 1.0, 2110, 0],
+    [400.0, 77.5, 60.0, 0.0, 2210, 0],
+    [400.0, 77.5, 60.0, 0.0, 2310, 0],
+    [400.0, 77.5, 60.0, 0.0, 110, 0],
+    [400.0, 77.5, 60.0, 0.0, 210, 0],
+    [501.0, 86.0, 60.0, 0.0, 310, 3],
+    [364.0, 88.0, 44.0, 1.0, 410, 3],
+    [367.0, 94.0, 44.0, 1.0, 510, 3],
+    [382.0, 71.0, 41.0, 1.0, 610, 0],
+    [376.0, 75.0, 44.0, 2.0, 710, 0],
+    [367.0, 75.0, 44.0, 2.0, 810, 2],
+    [358.0, 75.0, 44.0, 1.0, 910, 2],
+    [356.0, 75.0, 14.0, 1.0, 1010, 4],
+    [355.0, 45.0, 44.0, 0.0, 1110, 2],
+    [249.0, 45.0, 24.0, 0.0, 1210, 1],
+    [229.0, 45.0, 45.0, 0.0, 1310, 1],
+    [219.0, 75.0, 24.0, 0.0, 1410, 1],
+    [355.0, 75.0, 24.0, 0.0, 1510, 2],
+    [379.0, 75.0, 24.0, 5.0, 1610, 0],
+    [299.0, 75.0, 24.0, 3.0, 1710, 2],
+    [355.0, 45.0, 24.0, 0.0, 1810, 4],
+    [355.0, 45.0, 24.0, 1.0, 1910, 4],
+    [299.0, 75.0, 24.0, 5.0, 2010, 1],
+    [355.0, 75.0, 24.0, 0.0, 2110, 4],
+    [400.0, 77.5, 60.0, 0.0, 2210, 0],
+    [400.0, 77.5, 60.0, 0.0, 2310, 0],
+    [400.0, 77.5, 60.0, 0.0, 110, 0],
+    [400.0, 77.5, 60.0, 0.0, 210, 0],
+    [400.0, 77.5, 60.0, 0.0, 310, 0],
+    [400.0, 77.5, 60.0, 1.0, 410, 0],
+    [400.0, 77.5, 60.0, 0.0, 510, 0],
+    [400.0, 77.5, 60.0, 0.0, 610, 0],
+    [400.0, 77.5, 60.0, 1.0, 710, 0],
+    [400.0, 77.5, 60.0, 3.0, 810, 0],
+    [400.0, 77.5, 60.0, 5.0, 910, 0],
+    [400.0, 77.5, 60.0, 5.0, 1010, 0],
+    [400.0, 77.5, 60.0, 0.0, 1110, 4],
+    [400.0, 77.5, 60.0, 0.0, 1210, 4],
+    [400.0, 77.5, 60.0, 6.0, 1310, 0],
+    [400.0, 77.5, 60.0, 6.0, 1410, 0]]
+
+
 
 tree = build_tree(dataset, 2, 1)
 print_tree(tree)
-#  predict with a stump (finds water < value)
-#TODO: Modify this slightly to be used for User-Mode (i.e. 'value's value needs changed to one set from xml)
-stumpWL = {'index': 0, 'right': 0, 'value': 300.0, 'left': 1}
-# finds water > value
-stumpWG = {'index': 0, 'right': 1, 'value': 500.0, 'left': 0}
-# finds temp < value
-#stumpTL = {'index': 1, 'right': 0, 'value': 70.0, 'left': 1}
-# finds temp > value
-#stumpTG = {'index': 1, 'right': 1, 'value': 85.0, 'left': 0}
-# finds humid < value
-#stumpHL = {'index': 2, 'right': 0, 'value': 40.0, 'left': 1}
-# finds humid > value
-#stumpHG = {'index': 2, 'right': 1, 'value': 80.0, 'left': 0}
-# finds light < value
-#stumpLL = {'index': 3, 'right': 0, 'value': 2.0, 'left': 1}
-# finds light > value
-#stumpLG = {'index': 3, 'right': 1, 'value': 6.0, 'left': 0}
 
 
 for i, row in enumerate(dataset):
-    predictionWL = predict(stumpWL, row)
-    #print "WL = " + str(predictionWL)
-    predictionWG = predict(stumpWG, row)
-    #print "WG = " + str(predictionWG)
-    #predictionTL = predict(stumpTL, row)
-    #print "TL = " + str(predictionTL)
-    #predictionTG = predict(stumpTG, row)
-    #print "TG = " + str(predictionTG)
-    #predictionHL = predict(stumpHL, row)
-    #print "HL = " + str(predictionHL)
-    #predictionHG = predict(stumpHG, row)
-    #print "HG = " + str(predictionHG)
-    #predictionLL = predict(stumpLL, row)
-    #print "LL = " + str(predictionLL)
-    #predictionLG = predict(stumpLG, row)
-    #print "LG = " + str(predictionLG)
-    
-    #print "Row = " + str(row)
-    #Max = 8
-    #Min = 0
-    prediction = (predictionWL * 4) + (predictionWG * 2)# + (predictionTL * 1) + (predictionTG * 1) + (predictionHL * 1) + (predictionHG * 1) + (predictionLL * 2) + (predictionLG * 1)
-    #print prediction
-    if prediction >= 4:
-        prediction = "-%d" %(int(1+(prediction-4)))
-        print('Expected=%d, Got='% (row[-1]) + prediction)
-    else:
-        if prediction == 0:
-            print('Expected=%d, Got=+'% (row[-1]) + str(prediction+5))
-        else:
-            prediction = "+%d" %(int(1+(4-prediction)))
-            print('Expected=%d, Got='% (row[-1]) + prediction)
+    prediction = predict(tree, row)
+    print('Expected=%d, Got=%d' % (row[-1], prediction))
 
             
 class statusThread (threading.Thread):
@@ -442,15 +468,6 @@ class statusThread (threading.Thread):
         del plantList, typeList
         nThread.start()
         return 0
-        
-#def getData:
-    #Collect Data on all plants every so often
-    #Compile the data into a list
-        
-#def orgData:
-    #
-
-#def statusPredict:
 
 class webServThread (threading.Thread):
     def __init__ (self):
@@ -464,6 +481,9 @@ thread2 = webServThread()
 thread1.start()
 thread2.start()
 
+
+
 #if __name__ == "__main__":
     #app.run()
     
+

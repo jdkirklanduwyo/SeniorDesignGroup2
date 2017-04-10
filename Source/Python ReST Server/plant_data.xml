@@ -1,20 +1,18 @@
 <data>
-<planttype id="5">
-<ptype family="bean" fertilizer="6" foliage="leafy" foliagecolor="4" heatzone="2" humid="45" id="1" light="4" lightrange="1" name="BeanSprout" size="8-12in" soilr="2-4" temp="78" water="3" waterr="4-6" />
-<ptype family="fern" fertilizer="7" foliage="leafy" foliagecolor="4" heatzone="2" humid="65" id="2" light="4" lightrange="1" name="Houseplant" size="24-46in" soilr="1-4" temp="70" water="4" waterr="6-7" />
-<ptype family="fungus" fertilizer="4" foliage="fungus" foliagecolor="8" heatzone="4" humid="85" id="3" light="2" lightrange="0" name="Mushroom" size="2-4in" soilr="3-3" temp="85" water="8" waterr="7-8" />
-<ptype family="lettuce" fertilizer="6" foliage="leafy" foliagecolor="4" heatzone="12" humid="55" id="4" light="5" lightrange="1" name="PurpleLettuce" size="6-8in" soilr="2-4" temp="79" water="3" waterr="4-6" /></planttype>
 <activeplants id="12">
-<plant health="100" humid="45" id="1" light="4" ptype="1" temp="78" water="3" />
-<plant health="95" humid="44" id="2" light="5" ptype="1" temp="76" water="3" />
-<plant health="96" humid="43" id="3" light="5" ptype="1" temp="77" water="3" />
-<plant health="78" humid="4" id="4" light="4" ptype="1" temp="5" water="3" />
-<plant health="82" humid="45" id="5" light="0" ptype="1" temp="79" water="3" />
-<plant health="81" humid="44" id="6" light="0" ptype="1" temp="80" water="3" />
-<plant health="90" humid="40" id="7" light="4" ptype="1" temp="70" water="4" />
-<plant health="73" humid="44" id="8" light="5" ptype="1" temp="82" water="0" />
-<plant health="77" humid="45" id="9" light="5" ptype="1" temp="83" water="0" />
-<plant health="96" humid="44" id="11" light="5" ptype="1" temp="84" water="3" />
+<plant health="1" humidSens="1" id="1" lightSens="1" name="Bean1" tempSens="1" waterSens="1" waterTimer="200" foliageColor="1" inTraining="0" />
+<plant health="95" humidSens="44" id="2" lightSens="5" name="Bean2" tempSens="76" waterSens="3" waterTimer="200" foliageColor="1" inTraining="0" />
+<plant health="96" humidSens="43" id="3" lightSens="5" name="Bean3" tempSens="77" waterSens="3" waterTimer="200" foliageColor="1" inTraining="0" />
+<plant health="78" humidSens="4" id="4" lightSens="4" name="Bean4" tempSens="5" waterSens="3" waterTimer="200" foliageColor="1" inTraining="0" />
+<plant health="82" humidSens="45" id="5" lightSens="0" name="Bean5" tempSens="79" waterSens="3" waterTimer="200" foliageColor="1" inTraining="0" />
+<plant health="81" humidSens="44" id="6" lightSens="0" name="Bean6" tempSens="80" waterSens="3" waterTimer="200" foliageColor="1" inTraining="0" />
+<plant health="90" humidSens="40" id="7" lightSens="4" name="Bean7" tempSens="70" waterSens="4" waterTimer="200" foliageColor="1" inTraining="0" />
+<plant health="73" humidSens="44" id="8" lightSens="5" name="Bean8" tempSens="82" waterSens="0" waterTimer="200" foliageColor="1" inTraining="0" />
+<plant health="77" humidSens="45" id="9" lightSens="5" name="Bean9" tempSens="83" waterSens="0" waterTimer="200" foliageColor="1" inTraining="0" />
+<plant health="96" humidSens="44" id="11" lightSens="5" name="Bean11" tempSens="84" waterSens="3" waterTimer="200" foliageColor="1" inTraining="0" />
 </activeplants>
-<curplant health="92" humid="45" id="2" light="4" ptype="1" temp="75" water="4" />
+<curplant health="92" humidSens="45" id="2" lightSens="4" name="Bean2" tempSens="75" waterSens="4" waterTimer="200" foliageColor="1" inTraining="0" />
+<userscore score="0" />
+<settings lightSensFlag="1" waitFlag="0" waterSensFlag="1" />
+<pixy data="" />
 </data>
