@@ -15,6 +15,7 @@ public class ConnectionMethods {
     static String Q_UPDATE_PLANT = "/update/plant/";
     static String Q_UPDATE_TYPE = "/update/type/";
     static String Q_UPDATE_CURRENT = "/update/current/";
+    static String Q_PLANT_NUM = "/plantcount";
 
     private static String servIP = "192.168.0.30";
     private static String servPort = "8080";
@@ -64,7 +65,9 @@ public class ConnectionMethods {
         return names;
     }
 
-    static public int getNumOfPlants(){ return numOfPlants; }
+    static public int getNumOfPlants(){
+        return Integer.parseInt(queryServer(Q_PLANT_NUM));
+    } //TODO: figure out why number of plants inaccurate
 
     static public void setNumOfPlants(int numAdded){ numOfPlants += numAdded; }
 

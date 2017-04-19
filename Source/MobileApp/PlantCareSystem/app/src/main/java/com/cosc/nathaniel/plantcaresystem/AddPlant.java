@@ -38,6 +38,8 @@ public class AddPlant extends AppCompatActivity implements View.OnClickListener 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spType.setAdapter(adapter);
+
+        //TODO: Implement water timing and foliage color
     }
 
     @Override
@@ -58,7 +60,7 @@ public class AddPlant extends AppCompatActivity implements View.OnClickListener 
             100
         );
 
-        ConnectionMethods.setNumOfPlants(1);
+        //ConnectionMethods.setNumOfPlants(1);
 
         try {
             Intent in = new Intent(v.getContext(), MainActivity.class);

@@ -14,15 +14,6 @@
 
     <!-- android:background="@drawable/plantimg" -->
 
-    <Button
-        android:text="Settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/btnSettings" />
-
     <TextView
         android:id="@+id/textRating"
         android:layout_width="wrap_content"
@@ -34,21 +25,13 @@
         android:textSize="72sp" />
 
     <Button
-        android:text="Sensors"
+        android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnSensors"
+        android:text="Delete Plant"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
-
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Add Plant" />
 
     <Button
         android:id="@+id/btnRight"
@@ -79,5 +62,31 @@
         android:layout_centerHorizontal="true"
         android:text="Plant 1"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+    <TextView
+        android:id="@+id/txtType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPlant"
+        android:layout_centerHorizontal="true"
+        android:text="Bean Sprout" />
+
+    <Button
+        android:id="@+id/btnRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="Rate Health" />
+
+    <Button
+        android:id="@+id/btnSetCurrent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textRating"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="Set as current plant" />
 
 </RelativeLayout>

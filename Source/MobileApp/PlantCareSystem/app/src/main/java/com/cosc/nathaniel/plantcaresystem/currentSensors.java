@@ -95,7 +95,6 @@ public class currentSensors extends AppCompatActivity implements View.OnClickLis
     }
 
     private String getLevel(String key){
-        //TODO get plant num from main screen
         return ConnectionMethods.parsePlant(ConnectionMethods.queryServer(ConnectionMethods.Q_CURRENT), key);
     }
 }

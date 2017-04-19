@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     // button variables
-    Button btnSettings, btnSensors, btnAdd, btnRight, btnLeft;
-    TextView txtRating, txtPlant;
+    Button btnRate, btnDelete, btnSetCurrent, btnRight, btnLeft;
+    TextView txtRating, txtPlant; //TODO: Add plant type var
     int currentID = 1;
 
     @Override
@@ -23,49 +23,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // instantiate textview
-        txtRating = (TextView) findViewById(R.id.textRating); //TODO make rating clickable to set health
+        txtRating = (TextView) findViewById(R.id.textRating);
         txtPlant = (TextView) findViewById(R.id.txtPlant);
+        Log.e("DEBUG", "---------------1");
         // instantiate buttons
-        btnSettings = (Button) findViewById(R.id.btnSettings);
-        btnSensors = (Button) findViewById(R.id.btnSensors);
-        btnAdd = (Button) findViewById(R.id.btnAdd);
+        btnRate = (Button) findViewById(R.id.btnRate);
+        btnDelete = (Button) findViewById(R.id.btnDelete);
+        btnSetCurrent = (Button) findViewById(R.id.btnSetCurrent);
         btnRight = (Button) findViewById(R.id.btnRight);
         btnLeft = (Button) findViewById(R.id.btnLeft);
-        btnSettings.setOnClickListener(this);
-        btnSensors.setOnClickListener(this);
-        btnAdd.setOnClickListener(this);
+        Log.e("DEBUG", "---------------2");
+        btnRate.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
+        btnSetCurrent.setOnClickListener(this);
         btnLeft.setOnClickListener(this);
         btnRight.setOnClickListener(this);
-        //TODO delete plant button
+        Log.e("DEBUG", "---------------3");
 
         setCurrentPlant(0);
+        Log.e("DEBUG", "---------------4");
     }
 
     @Override
     public void onClick(View v) {
         //check which button clicked
-        if (v.equals(btnSensors)){
+        if (v.equals(btnRate)){
             try {
-                Intent in = new Intent(v.getContext(), currentSensors.class);
+                Intent in = new Intent(v.getContext(), Rate.class);
                 startActivity(in);
             } catch (Exception e) {
-                Log.e("MainActivity", "Failed to launch new activity.");
+                Log.e("DEBUG", "MainActivity: Failed to launch new activity.");
             }
         }
-        else if (v.equals(btnSettings)){
+        else if (v.equals(btnDelete)){
             try {
-                Intent in = new Intent(v.getContext(), Settings.class);
-                startActivity(in);
+                //TODO: delete plant
             } catch (Exception e) {
-                Log.e("MainActivity", "Failed to launch new activity.");
+                Log.e("DEBUG", "MainActivity: Failed to launch new activity.");
             }
         }
-        else if (v.equals(btnAdd)){
+        else if (v.equals(btnSetCurrent)){
             try {
-                Intent in = new Intent(v.getContext(), AddPlant.class);
-                startActivity(in);
+                //TODO: set the current plant
             } catch (Exception e) {
-                Log.e("MainActivity", "Failed to launch new activity.");
+                Log.e("DEBUG", "MainActivity: Failed to launch new activity.");
             }
         }
         else if (v.equals(btnRight)){
@@ -126,21 +127,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (currentID <= 1){
             Log.e("DEBUG", "Disable left");
             btnLeft.setEnabled(false);
+            btnLeft.setVisibility(View.INVISIBLE);
         }
         else{
             btnLeft.setEnabled(true);
+            btnLeft.setVisibility(View.VISIBLE);
         }
-
+        Log.e("DEBUG", "--------------sub 1");
         if (currentID >= ConnectionMethods.getNumOfPlants()){
             Log.e("DEBUG", "Disable right");
             btnRight.setEnabled(false);
+            btnRight.setVisibility(View.INVISIBLE);
         }
         else{
             btnRight.setEnabled(true);
+            btnRight.setVisibility(View.VISIBLE);
         }
-
+        Log.e("DEBUG", "--------------sub 2");
         //set textview for plant id
         txtPlant.setText("Plant " + currentID);
+        Log.e("DEBUG", "--------------sub 3");
         setRatingText(currentID);
     }
 
