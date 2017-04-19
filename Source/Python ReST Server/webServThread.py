@@ -123,7 +123,7 @@ class update_foliage:
         for child in root.findall('activeplants'):
             for childp in child:
                 if childp.attrib['id'] == str(plant[0]):
-                    childp.set('foliageColor', str(plant[1])
+                    childp.set('foliageColor', str(plant[1]))
                     tree = ET.ElementTree(root)
                     tree.write('plant_data.xml')
                     return 'Success'
@@ -136,7 +136,7 @@ class update_waterTimer:
         for child in root.findall('activeplants'):
             for childp in child:
                 if childp.attrib['id'] == str(plant[0]):
-                    childp.set('waterTimer', str(plant[1])
+                    childp.set('waterTimer', str(plant[1]))
                     tree = ET.ElementTree(root)
                     tree.write('plant_data.xml')
                     return 'Success'
