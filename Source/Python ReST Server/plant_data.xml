@@ -1,18 +1,23 @@
 <data>
-<activeplants id="12">
-<plant health="1" humidSens="1" id="1" lightSens="1" name="Bean1" tempSens="1" waterSens="1" waterTimer="200" foliageColor="1" inTraining="0" />
-<plant health="95" humidSens="44" id="2" lightSens="5" name="Bean2" tempSens="76" waterSens="3" waterTimer="200" foliageColor="1" inTraining="0" />
-<plant health="96" humidSens="43" id="3" lightSens="5" name="Bean3" tempSens="77" waterSens="3" waterTimer="200" foliageColor="1" inTraining="0" />
-<plant health="78" humidSens="4" id="4" lightSens="4" name="Bean4" tempSens="5" waterSens="3" waterTimer="200" foliageColor="1" inTraining="0" />
-<plant health="82" humidSens="45" id="5" lightSens="0" name="Bean5" tempSens="79" waterSens="3" waterTimer="200" foliageColor="1" inTraining="0" />
-<plant health="81" humidSens="44" id="6" lightSens="0" name="Bean6" tempSens="80" waterSens="3" waterTimer="200" foliageColor="1" inTraining="0" />
-<plant health="90" humidSens="40" id="7" lightSens="4" name="Bean7" tempSens="70" waterSens="4" waterTimer="200" foliageColor="1" inTraining="0" />
-<plant health="73" humidSens="44" id="8" lightSens="5" name="Bean8" tempSens="82" waterSens="0" waterTimer="200" foliageColor="1" inTraining="0" />
-<plant health="77" humidSens="45" id="9" lightSens="5" name="Bean9" tempSens="83" waterSens="0" waterTimer="200" foliageColor="1" inTraining="0" />
-<plant health="96" humidSens="44" id="11" lightSens="5" name="Bean11" tempSens="84" waterSens="3" waterTimer="200" foliageColor="1" inTraining="0" />
-</activeplants>
-<curplant health="92" humidSens="45" id="2" lightSens="4" name="Bean2" tempSens="75" waterSens="4" waterTimer="200" foliageColor="1" inTraining="0" />
+<activeplants id="13">
+<plant foliageColor="1" health="1" humidSens="1" id="1" inTraining="0" lightSens="1" name="Bean1" tempSens="1" waterSens="1" waterTimer="200" />
+<plant foliageColor="1" health="95" humidSens="44" id="2" inTraining="0" lightSens="5" name="Bean2" tempSens="76" waterSens="3" waterTimer="200" />
+<plant foliageColor="1" health="96" humidSens="43" id="3" inTraining="0" lightSens="5" name="Bean3" tempSens="77" waterSens="3" waterTimer="200" />
+<plant foliageColor="1" health="78" humidSens="4" id="4" inTraining="0" lightSens="4" name="Bean4" tempSens="5" waterSens="3" waterTimer="200" />
+<plant foliageColor="1" health="82" humidSens="45" id="5" inTraining="0" lightSens="0" name="Bean5" tempSens="79" waterSens="3" waterTimer="200" />
+<plant foliageColor="1" health="81" humidSens="44" id="6" inTraining="0" lightSens="0" name="Bean6" tempSens="80" waterSens="3" waterTimer="200" />
+<plant foliageColor="1" health="90" humidSens="40" id="7" inTraining="0" lightSens="4" name="Bean7" tempSens="70" waterSens="4" waterTimer="200" />
+<plant foliageColor="1" health="73" humidSens="44" id="8" inTraining="0" lightSens="5" name="Bean8" tempSens="82" waterSens="0" waterTimer="200" />
+<plant foliageColor="1" health="77" humidSens="45" id="9" inTraining="0" lightSens="5" name="Bean9" tempSens="83" waterSens="0" waterTimer="200" />
+<plant foliageColor="1" health="96" humidSens="44" id="11" inTraining="0" lightSens="5" name="Bean11" tempSens="84" waterSens="3" waterTimer="200" />
+<plant foliageColor="5" health="92" humidSens="52" id="12" inTraining="0" lightSens="5" name="Bean1" tempSens="75" waterSens="425" waterTimer="4560" /></activeplants>
+<curplant foliageColor="1" health="100" humidSens="52" id="12" inTraining="0" lightSens="5" name="Bean2" tempSens="75" waterSens="425" waterTimer="200" />
 <userscore score="0" />
-<settings lightSensFlag="1" waitFlag="0" waterSensFlag="1" />
-<pixy data="" />
+<settings humidFlag="0" lightFlag="0" tempFlag="0" waitFlag="0" waterFlag="0" />
+<pixy data="2 11 13" id="12" prevPixy="1 11" />
+<dtrees>
+<tree plantid="1" t="[[358.0, 75.0, 44.0, 5.0, 0.0], [353.0, 76.0, 44.0, 5.0, 0.0], [362.0, 77.0, 45.0, 4.0, 0.0], [344.0, 75.0, 44.0, 4.0, 0.0], [323.0, 75.0, 45.0, 4.0, 0.0], [401.0, 77.0, 44.0, 4.0, 0.0], [421.0, 75.0, 43.0, 3.0, 0.0], [322.0, 77.0, 44.0, 3.0, 0.0], [345.0, 76.0, 46.0, 3.0, 0.0], [367.0, 75.0, 46.0, 2.0, 0.0], [288.0, 80.0, 47.0, 2.0, 1.0], [349.0, 78.0, 48.0, 5.0, 0.0], [399.0, 79.0, 49.0, 5.0, 0.0], [364.0, 75.0, 50.0, 0.0, 2.0], [221.0, 75.0, 44.0, 0.0, 1.0], [114.0, 75.0, 44.0, 0.0, 1.0], [332.0, 75.0, 44.0, 0.0, 2.0], [342.0, 75.0, 44.0, 0.0, 2.0], [322.0, 75.0, 44.0, 0.0, 2.0], [364.0, 88.0, 44.0, 6.0, 3.0], [367.0, 94.0, 44.0, 6.0, 3.0], [382.0, 71.0, 41.0, 5.0, 0.0], [376.0, 75.0, 44.0, 2.0, 0.0], [367.0, 75.0, 44.0, 2.0, 0.0], [358.0, 75.0, 44.0, 3.0, 0.0], [356.0, 75.0, 14.0, 5.0, 4.0], [355.0, 75.0, 24.0, 5.0, 4.0], [352.0, 75.0, 44.0, 6.0, 0.0], [348.0, 75.0, 44.0, 6.0, 0.0]]" />
+<tree plantid="12" t="[[4.0, 75.0, 45.0, 4.0, 0.0], [4.0, 75.0, 45.0, 4.0, 0.0], [4.0, 75.0, 45.0, 4.0, 0.0], [4.0, 75.0, 45.0, 4.0, 0.0], [4.0, 75.0, 45.0, 4.0, 0.0], [4.0, 75.0, 45.0, 4.0, 0.0], [4.0, 75.0, 45.0, 4.0, 0.0], [4.0, 75.0, 45.0, 4.0, 0.0], [4.0, 75.0, 45.0, 4.0, 0.0], [45.0, 74.0, 46.0, 5.0, 0.0], [45.0, 74.0, 46.0, 5.0, 0.0], [45.0, 74.0, 46.0, 5.0, 0.0], [455.0, 74.0, 46.0, 5.0, 0.0], [455.0, 74.0, 46.0, 5.0, 0.0], [455.0, 74.0, 46.0, 5.0, 0.0], [455.0, 74.0, 46.0, 5.0, 0.0], [455.0, 74.0, 46.0, 5.0, 0.0], [425.0, 75.0, 52.0, 5.0, 0.0]]" />
+<tree plantid="13" t="[[4.0, 75.0, 45.0, 4.0, 0.0], [4.0, 75.0, 45.0, 4.0, 0.0], [4.0, 75.0, 45.0, 4.0, 0.0]]" />
+</dtrees>
 </data>

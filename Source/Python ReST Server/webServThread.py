@@ -1,10 +1,13 @@
 import web
 import threading
 import time
+import datetime
 import xml.etree.cElementTree as ET
 
 tree = ET.parse('plant_data.xml')
 root = tree.getroot()
+prevPixyL = []
+prevCount = 0
 
 urls = (
     #This is standard request format: /plants
@@ -15,14 +18,14 @@ urls = (
     '/current', 'cur_plant',
     #This is standard request format: /plantcount
     '/plantcount', 'plant_count',
-    #This is standard request format: /add/plant/name lightSens waterSens humidSens tempSens health waterTimer foliageColor inTraining
-    #                            E.G: host:8080/add/plant/Bean1 4 3 45 78 100 4560 5 1
+    #This is standard request format: /add/plant/name lightSens waterSens humidSens tempSens health waterTimer foliageColor 
+    #                            E.G: host:8080/add/plant/Bean1 4 315 45 78 100 4560 5 
     '/add/plant/(.*)', 'add_plant',
     #This is standard request format: /update/id lightS waterS humidS tempS health inTraining
-    #                            E.G: host:8080/update/plant/7 4 3 45 78 100 1
+    #                            E.G: host:8080/update/plant/7 4 315 45 78 100 1
     '/update/plant/(.*)', 'update_plant',
     #This is standard request format: /update/current/id lightS waterS humidS tempS health inTraining
-    #                            E.G: host:8080/update/current/7 4 3 45 78 100 1
+    #                            E.G: host:8080/update/current/7 4 315 45 78 100 1
     '/update/current/(.*)', 'update_current',
     #This is standard request format: /update/foliage/id val
     #                            E.G: host:8080/update/foliage/2 4
@@ -39,8 +42,8 @@ urls = (
     '/current/userscore/(.*)', 'change_uscore',
     #This is standard request format: /settings
     '/settings', 'sett_report',
-    #This is standard request format: /settings/set/activateWaterFlag activateLightFlag waitFlag
-    #                            E.G: /settings/set/1 1 0
+    #This is standard request format: /settings/set/activateWaterFlag activateLightFlag sendTempNotificationFlag sendHumidNotificationFlag waitFlag
+    #                            E.G: /settings/set/1 1 1 1 0
     '/settings/set/(.*)', 'sett_set',
     #This is standard request format: /settings/waiting
     '/settings/waiting', 'sett_wait',
@@ -90,10 +93,12 @@ class add_plant:
         print 'Add plant'
         for child in root.findall('activeplants'):
             npID = int(child.attrib['id'])
-            data = map(int, data.split())
-            nRoot = ET.SubElement(child, 'plant', attrib={'id':str(npID), 'name':str(data[0]), 'lightSens':str(data[1]), 'waterSens':str(data[2]), 'humidSens':str(data[3]), 'tempSens':str(data[4]), 'health':str(data[5]), 'waterTimer':200, 'foliageColor':1,'inTraining':1})
+            data = map(str, data.split())
+            nRoot = ET.SubElement(child, 'plant', {'id':str(npID), 'name':str(data[0]), 'lightSens':str(data[1]), 'waterSens':str(data[2]), 'humidSens':str(data[3]), 'tempSens':str(data[4]), 'health':str(data[5]), 'waterTimer':str(data[6]), 'foliageColor':str(data[7]),'inTraining':'1'})
+            for childp in root.findall('dtrees'):
+                nRoot2 = ET.SubElement(childp, 'tree', {'plantid':str(npID), 't':'[]'})
             child.set('id', str(npID+1))
-            ET.dump(root)
+            #ET.dump(root)
             tree.write('plant_data.xml')
             return 'Success'
         return 'Failure'
@@ -154,6 +159,15 @@ class update_current:
             child.set('tempSens', str(plant[4]))
             child.set('health', str(plant[5]))
             child.set('inTraining', str(plant[6]))
+        for child in root.findall('activeplants'):
+            for childp in child:
+                if childp.attrib['id'] == str(plant[0]):
+                    childp.set('lightSens', str(plant[1]))
+                    childp.set('waterSens', str(plant[2]))
+                    childp.set('humidSens', str(plant[3]))
+                    childp.set('tempSens', str(plant[4]))
+                    childp.set('health', str(plant[5]))
+                    childp.set('inTraining', str(plant[6]))
             tree = ET.ElementTree(root)
             tree.write('plant_data.xml')
             return 'Success'
@@ -202,7 +216,9 @@ class sett_set:
         for child in root.findall('settings'):
             child.set('waterFlag', str(sett[0]))
             child.set('lightFlag', str(sett[1]))
-            child.set('waitFlag', str(sett[2]))
+            child.set('tempFlag', str(sett[2]))
+            child.set('humidFlag', str(sett[3]))
+            child.set('waitFlag', str(sett[4]))
             tree = ET.ElementTree(root)
             tree.write('plant_data.xml')
             return 'Success'
@@ -235,6 +251,7 @@ class pixy_set:
     def GET(self, pixy):
         print 'set pixy'
         for child in root.findall('pixy'):
+            child.attrib['prevPixy'] = child.attrib['data']
             child.set('data',str(pixy))
             tree = ET.ElementTree(root)
             tree.write('plant_data.xml')
@@ -347,141 +364,226 @@ def predict(node, row):
 
 
 
-dataset = [[358.0, 75.0, 44.0, 5.0, 1010, 0],
-    [353.0, 76.0, 44.0, 5.0, 1110, 0],
-    [362.0, 77.0, 45.0, 4.0, 1210, 0],
-    [344.0, 75.0, 44.0, 4.0, 1310, 0],
-    [323.0, 75.0, 45.0, 4.0, 1410, 0],
-    [401.0, 77.0, 44.0, 4.0, 1510, 0],
-    [421.0, 75.0, 43.0, 3.0, 1610, 0],
-    [322.0, 77.0, 44.0, 3.0, 1710, 0],
-    [345.0, 76.0, 46.0, 3.0, 1810, 0],
-    [367.0, 75.0, 46.0, 2.0, 1910, 0],
-    [288.0, 80.0, 47.0, 2.0, 2010, 0],
-    [349.0, 78.0, 48.0, 1.0, 2110, 0],
-    [399.0, 79.0, 49.0, 1.0, 2210, 0],
-    [364.0, 75.0, 50.0, 0.0, 2310, 0],
-    [221.0, 75.0, 44.0, 0.0, 110, 1],
-    [114.0, 75.0, 44.0, 0.0, 210, 1],
-    [302.0, 75.0, 44.0, 0.0, 310, 0],
-    [364.0, 88.0, 44.0, 1.0, 410, 3],
-    [367.0, 94.0, 44.0, 1.0, 510, 3],
-    [382.0, 71.0, 41.0, 1.0, 610, 0],
-    [376.0, 75.0, 44.0, 2.0, 710, 0],
-    [367.0, 75.0, 44.0, 2.0, 810, 0],
-    [358.0, 75.0, 44.0, 3.0, 910, 0],
-    [356.0, 75.0, 14.0, 5.0, 1010, 4],
-    [355.0, 75.0, 24.0, 5.0, 1110, 4],
-    [352.0, 75.0, 44.0, 6.0, 1210, 0],
-    [348.0, 75.0, 44.0, 6.0, 1310, 0],
-    [259.0, 86.0, 61.0, 5.9, 1410, 1],
-    [279.0, 69.0, 69.0, 2.0, 1510, 1],
-    [400.0, 77.5, 60.0, 5.0, 1610, 0],
-    [400.0, 77.5, 60.0, 3.0, 1710, 0],
-    [400.0, 77.5, 60.0, 2.0, 1810, 0],
-    [400.0, 77.5, 60.0, 2.0, 1910, 0],
-    [400.0, 77.5, 60.0, 2.0, 2010, 0],
-    [400.0, 77.5, 60.0, 1.0, 2110, 0],
-    [400.0, 77.5, 60.0, 0.0, 2210, 0],
-    [400.0, 77.5, 60.0, 0.0, 2310, 0],
-    [400.0, 77.5, 60.0, 0.0, 110, 0],
-    [400.0, 77.5, 60.0, 0.0, 210, 0],
-    [501.0, 86.0, 60.0, 0.0, 310, 3],
-    [364.0, 88.0, 44.0, 1.0, 410, 3],
-    [367.0, 94.0, 44.0, 1.0, 510, 3],
-    [382.0, 71.0, 41.0, 1.0, 610, 0],
-    [376.0, 75.0, 44.0, 2.0, 710, 0],
-    [367.0, 75.0, 44.0, 2.0, 810, 2],
-    [358.0, 75.0, 44.0, 1.0, 910, 2],
-    [356.0, 75.0, 14.0, 1.0, 1010, 4],
-    [355.0, 45.0, 44.0, 0.0, 1110, 2],
-    [249.0, 45.0, 24.0, 0.0, 1210, 1],
-    [229.0, 45.0, 45.0, 0.0, 1310, 1],
-    [219.0, 75.0, 24.0, 0.0, 1410, 1],
-    [355.0, 75.0, 24.0, 0.0, 1510, 2],
-    [379.0, 75.0, 24.0, 5.0, 1610, 0],
-    [299.0, 75.0, 24.0, 3.0, 1710, 2],
-    [355.0, 45.0, 24.0, 0.0, 1810, 4],
-    [355.0, 45.0, 24.0, 1.0, 1910, 4],
-    [299.0, 75.0, 24.0, 5.0, 2010, 1],
-    [355.0, 75.0, 24.0, 0.0, 2110, 4],
-    [400.0, 77.5, 60.0, 0.0, 2210, 0],
-    [400.0, 77.5, 60.0, 0.0, 2310, 0],
-    [400.0, 77.5, 60.0, 0.0, 110, 0],
-    [400.0, 77.5, 60.0, 0.0, 210, 0],
-    [400.0, 77.5, 60.0, 0.0, 310, 0],
-    [400.0, 77.5, 60.0, 1.0, 410, 0],
-    [400.0, 77.5, 60.0, 0.0, 510, 0],
-    [400.0, 77.5, 60.0, 0.0, 610, 0],
-    [400.0, 77.5, 60.0, 1.0, 710, 0],
-    [400.0, 77.5, 60.0, 3.0, 810, 0],
-    [400.0, 77.5, 60.0, 5.0, 910, 0],
-    [400.0, 77.5, 60.0, 5.0, 1010, 0],
-    [400.0, 77.5, 60.0, 0.0, 1110, 4],
-    [400.0, 77.5, 60.0, 0.0, 1210, 4],
-    [400.0, 77.5, 60.0, 6.0, 1310, 0],
-    [400.0, 77.5, 60.0, 6.0, 1410, 0]]
+#dataset = [[358.0, 75.0, 44.0, 5.0, 0],
+#    [353.0, 76.0, 44.0, 5.0, 0],
+#    [362.0, 77.0, 45.0, 4.0, 0],
+#    [344.0, 75.0, 44.0, 4.0, 0],
+#    [323.0, 75.0, 45.0, 4.0, 0],
+#    [401.0, 77.0, 44.0, 4.0, 0],
+#    [421.0, 75.0, 43.0, 3.0, 0],
+#    [322.0, 77.0, 44.0, 3.0, 0],
+#    [345.0, 76.0, 46.0, 3.0, 0],
+#    [367.0, 75.0, 46.0, 2.0, 0],
+#    [288.0, 80.0, 47.0, 2.0, 1],
+#    [349.0, 78.0, 48.0, 5.0, 0],
+#    [399.0, 79.0, 49.0, 5.0, 0],
+#    [364.0, 75.0, 50.0, 0.0, 2],
+#    [221.0, 75.0, 44.0, 0.0, 1],
+#    [114.0, 75.0, 44.0, 0.0, 1],
+#    [332.0, 75.0, 44.0, 0.0, 2],
+#    [342.0, 75.0, 44.0, 0.0, 2],
+#    [322.0, 75.0, 44.0, 0.0, 2],
+#    [364.0, 88.0, 44.0, 6.0, 3],
+#    [367.0, 94.0, 44.0, 6.0, 3],
+#    [382.0, 71.0, 41.0, 5.0, 0],
+#    [376.0, 75.0, 44.0, 2.0, 0],
+#    [367.0, 75.0, 44.0, 2.0, 0],
+#    [358.0, 75.0, 44.0, 3.0, 0],
+#    [356.0, 75.0, 14.0, 5.0, 4],
+#    [355.0, 75.0, 24.0, 5.0, 4],
+#    [352.0, 75.0, 44.0, 6.0, 0],
+#    [348.0, 75.0, 44.0, 6.0, 0]]                 
 
-
-
-tree = build_tree(dataset, 2, 1)
-print_tree(tree)
-
-
-for i, row in enumerate(dataset):
-    prediction = predict(tree, row)
-    print('Expected=%d, Got=%d' % (row[-1], prediction))
-
+#dtree = build_tree(dataset, 4, 6)
+#print_tree(dtree)
+#
+#[X1 < 322.000]
+# [1]
+# [X4 < 2.000]
+#  [2]
+#  [X2 < 88.000]
+#   [X3 < 41.000]
+#    [4]
+#    [0]
+#   [3]
+#####
+# Save and recall tree datasets
+#for child in root.findall('dtrees'):
+#    nRoot = ET.SubElement(child,'tree',{'t'=str(dataset),'plantid'='test'})
+#    ET.dump(root)
+#    tree.write('plant_data.xml') 
+#for child in root.findall('dtrees'):
+#    for childp in child:
+#        if childp.attrib['plantid'] == 'test': 
+#            treeDataset = childp.attrib['t']
+#            temp = treeDataset.replace('[','').split('],')
+#            treeDataset = [map(float, entry.replace(']','').split(',')) for entry in temp] 
+#            print treeDataset           
+#for i, row in enumerate(dataset):
+#    prediction = predict(dtree, row)
+#    print('Expected=%d, Got=%d' % (row[-1], prediction))
             
 class statusThread (threading.Thread):
-    def __init__(self, tID, pID, nextRun):
+    def __init__(self, tID, count, prevL, nextRun):
         threading.Thread.__init__(self)
         self.tID = tID
-        self.pID = pID
+        self.count = count
+        self.prevL = prevL
         self.nextRun = nextRun
     def run(self):
         print "Starting Status Update Thread: " + self.tID
         #This builds the data for making a tree
         if self.nextRun != 0:
             plantList = []
-            typeList = []
-            for child in root.findall('activeplants'):
-                for childp in child:
-                    plantList.append(childp.attrib)
-                    #Water List
-                    #Temp List
-                    #Humid List
-                    #Light List
-                    
-            #print plantList
-            for child in root.findall('planttype'):
-                for childp in child:
-                    typeList.append(childp.attrib)
-            #print typeList
-            #for attr in plantList:
-                #print attr
+            readingList = [0.0,0.0,0.0,0.0] 
+            for child in root.findall('curplant'):
+                for childp in root.findall('dtrees'):
+                    for childp2 in childp:
+                        if int(childp2.attrib['plantid']) == int(child.attrib['id']):
+                            if childp2.attrib['t'] != "[]":
+                                plantList = childp2.attrib['t']
+                                temp = plantList.replace('[','').split('],')
+                                plantList = [map(float, entry.replace(']','').split(',')) for entry in temp]
+                                curTree = childp2
+                readingList[0] = float(child.attrib['waterSens'])
+                readingList[1] = float(child.attrib['tempSens'])
+                readingList[2] = float(child.attrib['humidSens'])
+                readingList[3] = float(child.attrib['lightSens'])
+                if int(child.attrib['inTraining']) == 1:
+                    if str(readingList) == str(self.prevL):
+                        self.count = self.count + 1 
+                        self.prevL = readingList
+                    else:
+                        self.count = 0
+                        self.prevL = readingList
+                    if self.count < 6:
+                        timeH = datetime.datetime.now().hour
+                        if timeH > 7 and timeH < 18:# 0==0:                    
+                            for childp3 in root.findall('userscore'): 
+                                readingList.append(float(childp3.attrib['score']))
+                            if len(plantList) < 200:
+                                plantList.append(readingList)
+                                curTree.attrib['t'] = str(plantList)
+                                #ET.dump(root)
+                                tree.write('plant_data.xml')
+                                readingList.pop(-1)
+                            else:
+                                plantList.pop(0)
+                                plantList.append(readingList)
+                                curTree.attrib['t'] = str(plantList)
+                                #ET.dump(root)
+                                tree.write('plant_data.xml')
+                                readingList.pop(-1)
+                else:
+                    dtree = build_tree(plantList, 4, 6)
+                    print_tree(dtree)
+                    prediction = predict(dtree, readingList)
+                    print prediction
+                    for profile in root.findall('settings'):
+                        #Elifs for classifications
+                        if float(prediction) == 0.0:
+                            profile.attrib['waterFlag'] = '0'
+                            profile.attrib['lightFlag'] = '0'
+                            profile.attrib['tempFlag'] = '0'
+                            profile.attrib['humidFlag'] = '0'
+                            tree.write('plant_data.xml')
+                        elif float(prediction) == 1.0:
+                            profile.attrib['waterFlag'] = '1'
+                            profile.attrib['lightFlag'] = '0'
+                            profile.attrib['tempFlag'] = '0'
+                            profile.attrib['humidFlag'] = '0'
+                            tree.write('plant_data.xml')
+                        elif float(prediction) == 2.0:
+                            profile.attrib['waterFlag'] = '0'
+                            profile.attrib['lightFlag'] = '1'
+                            profile.attrib['tempFlag'] = '0'
+                            profile.attrib['humidFlag'] = '0'
+                            tree.write('plant_data.xml')
+                        elif float(prediction) == 3.0:
+                            profile.attrib['waterFlag'] = '0'
+                            profile.attrib['lightFlag'] = '0'
+                            profile.attrib['tempFlag'] = '1'
+                            profile.attrib['humidFlag'] = '0' 
+                            tree.write('plant_data.xml')                            
+                        elif float(prediction) == 4.0:
+                            profile.attrib['waterFlag'] = '0'
+                            profile.attrib['lightFlag'] = '0'
+                            profile.attrib['tempFlag'] = '0'
+                            profile.attrib['humidFlag'] = '1'
+                            tree.write('plant_data.xml')                            
+                        else:
+                            print 'An Error has Occurred'
         #print float(self.nextRun) 
         #This is in seconds
+        self.prevL = readingList
+        #print "happening?"
+        pixyScore()
         time.sleep(float(self.nextRun)) 
+        self.nextRun = 0
         print "Ending Status Update Thread: " + self.tID
-        nThread = statusThread("2", "-1", "100")
-        del plantList, typeList
+        nThread = statusThread(str(int(self.tID)+1), self.count, self.prevL, "50")
+        del readingList
         nThread.start()
         return 0
-
+        
+def pixyScore():
+    dataL = [] 
+    prevDataL = []
+    datax = 0; datay = 0; pdatax = 0; pdatay = 0
+    global prevPixyL
+    global prevCount
+    #print "Here1"
+    for child in root.findall('pixy'):
+        data = child.attrib['data']
+        prevData = child.attrib['prevPixy']
+    for cur in root.findall('curplant'):
+        print child.attrib['id'], cur.attrib['id']
+        if int(child.attrib['id']) != int(cur.attrib['id']):
+            for pixyR in root.findall('pixy'):
+                pixyR.set('data', '1 11')
+                pixyR.set('prevPixy', '1 11')
+                pixyR.set('id',cur.attrib['id'])
+    dataL = data.split(',')
+    prevDataL = prevData.split(',')
+    print prevPixyL, [dataL, prevDataL]
+    if prevPixyL == [dataL, prevDataL]:
+        prevCount = prevCount + 1
+    else:
+        prevCount = 0
+    prevPixyL = [dataL, prevDataL]
+    if prevCount < 4:
+        for i,item in enumerate(dataL):
+            if i == 0:
+                score = int(data[0]) - int(prevData[0])
+            else:
+                datax = datax + int(item[0])
+                datay = datay + int(item[1])
+        for i,item in enumerate(prevDataL):
+            if i != 0:
+                pdatax = pdatax + int(item[0])
+                pdatay = pdatay + int(item[1])
+        if ((datax+datay)-(pdatax+pdatay)) > 0:
+            score = score + 1
+        elif ((datax+datay)-(pdatax+pdatay)) < 0:
+            score = score - 1
+        cur.attrib['health'] = str(int(cur.attrib['health']) + score)
+        if int(cur.attrib['health']) < 0:
+            cur.attrib['health'] = '0'
+        elif int(cur.attrib['health']) > 100:
+            cur.attrib['health'] = '100'
+        #ET.dump(root)
+        tree.write('plant_data.xml')
+    
 class webServThread (threading.Thread):
     def __init__ (self):
         threading.Thread.__init__(self)
-    def run(self):
+    def run(self):    
+        thread2 = statusThread("1", 0, [], "50")
+        thread2.start()
         app.run()
         
-thread1 = statusThread("1", "-1", "100")
-thread2 = webServThread()
-
+thread1 = webServThread()
 thread1.start()
-thread2.start()
-
-
 
 #if __name__ == "__main__":
     #app.run()
