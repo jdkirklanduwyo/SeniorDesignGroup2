@@ -578,14 +578,13 @@ class webServThread (threading.Thread):
     def __init__ (self):
         threading.Thread.__init__(self)
     def run(self):    
-        thread2 = statusThread("1", 0, [], "50")
-        thread2.start()
         app.run()
         
-thread1 = webServThread()
-thread1.start()
 
-#if __name__ == "__main__":
+if __name__ == "__main__":
     #app.run()
-    
+    thread1 = webServThread()
+    thread1.start()
+    thread2 = statusThread("1", 0, [], "50")
+    thread2.start()
 
