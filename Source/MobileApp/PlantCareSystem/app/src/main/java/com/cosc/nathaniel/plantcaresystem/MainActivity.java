@@ -12,11 +12,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     // button variables
     Button btnRate, btnDelete, btnSetCurrent, btnRight, btnLeft;
-    TextView txtRating, txtPlant; //TODO: Add plant type var
-    int currentID = 1;
+    TextView txtRating, txtPlant, txtName;
+    int currentID = 0;
+    List<String> idList = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,23 +29,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // instantiate textview
         txtRating = (TextView) findViewById(R.id.textRating);
         txtPlant = (TextView) findViewById(R.id.txtPlant);
-        Log.e("DEBUG", "---------------1");
+        txtName = (TextView) findViewById(R.id.txtName);
         // instantiate buttons
         btnRate = (Button) findViewById(R.id.btnRate);
         btnDelete = (Button) findViewById(R.id.btnDelete);
         btnSetCurrent = (Button) findViewById(R.id.btnSetCurrent);
         btnRight = (Button) findViewById(R.id.btnRight);
         btnLeft = (Button) findViewById(R.id.btnLeft);
-        Log.e("DEBUG", "---------------2");
         btnRate.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
         btnSetCurrent.setOnClickListener(this);
         btnLeft.setOnClickListener(this);
         btnRight.setOnClickListener(this);
-        Log.e("DEBUG", "---------------3");
 
-        setCurrentPlant(0);
-        Log.e("DEBUG", "---------------4");
+        idList = ConnectionMethods.getIDList();
+
+        switchPlant(0);
     }
 
     @Override
@@ -57,7 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if (v.equals(btnDelete)){
             try {
-                //TODO: delete plant
+                ConnectionMethods.queryServer(ConnectionMethods.Q_REMOVE + idList.get(currentID));
+                idList = ConnectionMethods.getIDList();
+                switchPlant(0);
             } catch (Exception e) {
                 Log.e("DEBUG", "MainActivity: Failed to launch new activity.");
             }
@@ -71,11 +76,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if (v.equals(btnRight)){
             Log.e("DEBUG", "Right clicked");
-            setCurrentPlant(1);
+            switchPlant(1);
         }
         else if (v.equals(btnLeft)){
             Log.e("DEBUG", "Left clicked");
-            setCurrentPlant(-1);
+            switchPlant(-1);
         }
     }
 
@@ -93,15 +98,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //.setContentIntent(pendingIntent); //Required on Gingerbread and below
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, mBuilder.build());
-    }
+    }//TODO: notification timing
 
-    private int getRating(int id){
+    private int getRating(String id){
         //get health rating of current plant from server
         String rating = ConnectionMethods.parsePlant(ConnectionMethods.queryServer(ConnectionMethods.Q_PLANT + id), "health");
         return Integer.parseInt(rating);
     }
 
-    private void setRatingText(int id){
+    private void setRatingText(String id){
         //set rating text
         int ratingNum = getRating(id);
         txtRating.setText(Integer.toString(ratingNum) + "%");
@@ -112,20 +117,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         );
     }
 
-    private void setCurrentPlant(int direction){
+    private void switchPlant(int direction){
         //increment or decrement according to direction (direction of 0 does not increment or decrement)
-        if ( (direction > 0) && (currentID < ConnectionMethods.getNumOfPlants()) ){
-            Log.e("DEBUG", "Increment");
+        if ( (direction > 0) && (currentID < idList.size()) ){
             currentID++;
         }
-        else if ( (direction < 0) && (currentID > 1) ){
-            Log.e("DEBUG", "Decrement");
+        else if ( (direction < 0) && (currentID > 0) ){
             currentID--;
         }
 
         //disable buttons if at edge of range
-        if (currentID <= 1){
-            Log.e("DEBUG", "Disable left");
+        if (currentID <= 0){
             btnLeft.setEnabled(false);
             btnLeft.setVisibility(View.INVISIBLE);
         }
@@ -133,21 +135,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             btnLeft.setEnabled(true);
             btnLeft.setVisibility(View.VISIBLE);
         }
-        Log.e("DEBUG", "--------------sub 1");
-        if (currentID >= ConnectionMethods.getNumOfPlants()){
-            Log.e("DEBUG", "Disable right");
+        if (currentID >= idList.size()-2){
             btnRight.setEnabled(false);
             btnRight.setVisibility(View.INVISIBLE);
         }
-        else{
+        else {
             btnRight.setEnabled(true);
             btnRight.setVisibility(View.VISIBLE);
         }
-        Log.e("DEBUG", "--------------sub 2");
         //set textview for plant id
-        txtPlant.setText("Plant " + currentID);
-        Log.e("DEBUG", "--------------sub 3");
-        setRatingText(currentID);
+        txtPlant.setText("Plant " + idList.get(currentID));
+        txtName.setText(ConnectionMethods.getPlantName(idList.get(currentID)));
+        setRatingText(idList.get(currentID));
     }
 
 }

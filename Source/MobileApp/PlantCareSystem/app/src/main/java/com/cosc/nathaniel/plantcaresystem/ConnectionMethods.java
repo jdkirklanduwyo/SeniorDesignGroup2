@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ConnectionMethods {
     static String Q_ALL_TYPES = "/data/types";
+    static String Q_ALL_PLANTS = "/plants";
     static String Q_TYPE = "/data/";
     static String Q_PLANT = "/plant/";
     static String Q_CURRENT = "/current";
@@ -15,6 +16,7 @@ public class ConnectionMethods {
     static String Q_UPDATE_PLANT = "/update/plant/";
     static String Q_UPDATE_TYPE = "/update/type/";
     static String Q_UPDATE_CURRENT = "/update/current/";
+    static String Q_REMOVE = "/remove/plant/";
     static String Q_PLANT_NUM = "/plantcount";
 
     private static String servIP = "192.168.0.30";
@@ -39,10 +41,10 @@ public class ConnectionMethods {
 
         //remove ' : { } from string
         data = data.replaceAll("'|:|\\{|\\}", "");
-        Log.e("DEBUG", data);
+        //Log.e("DEBUG", data);
         //split at ", "
         for (String item : data.split(",\\s")){
-            Log.e("DEBUG", item);
+            //Log.e("DEBUG", item);
             //if keys match, return value
             if ( key.equals(item.split("\\s")[0]) ){
                 return item.split("\\s")[1];
@@ -51,18 +53,22 @@ public class ConnectionMethods {
         return "";
     }
 
-    static public List<String> getTypeList(){
-        //settings:[{'water': '3', 'humid': '45', 'name': 'BeanSprout', 'family': 'bean', 'light': '4', 'foliagecolor': '4', 'waterr': '4-6', 'soilr': '2-4', 'temp': '78', 'foliage': 'leafy', 'fertilizer': '6', 'lightrange': '1', 'heatzone': '2', 'id': '1', 'size': '8-12in'},{'water': '4', 'humid': '65', 'name': 'Houseplant', 'family': 'fern', 'light': '4', 'foliagecolor': '4', 'waterr': '6-7', 'soilr': '1-4', 'temp': '70', 'foliage': 'leafy', 'fertilizer': '7', 'lightrange': '1', 'heatzone': '2', 'id': '2', 'size': '24-46in'},{'water': '8', 'humid': '85', 'name': 'Mushroom', 'family': 'fungus', 'light': '2', 'foliagecolor': '8', 'waterr': '7-8', 'soilr': '3-3', 'temp': '85', 'foliage': 'fungus', 'fertilizer': '4', 'lightrange': '0', 'heatzone': '4', 'id': '3', 'size': '2-4in'},{'water': '3', 'humid': '55', 'name': 'PurpleLettuce', 'family': 'lettuce', 'light': '5', 'foliagecolor': '4', 'waterr': '4-6', 'soilr': '2-4', 'temp': '79', 'foliage': 'leafy', 'fertilizer': '6', 'lightrange': '1', 'heatzone': '12', 'id': '4', 'size': '6-8in'},]
-        List<String> names = new ArrayList<String>();
-        Log.e("DEBUG", "-----------------point 1");
-        String data = queryServer(Q_ALL_TYPES);
-        Log.e("DEBUG", "-----------------point 2");
+    static public List<String> getIDList(){
+        //data format:[{'water': '3', 'humid': '45', 'name': 'BeanSprout', 'family': 'bean', 'light': '4', 'foliagecolor': '4', 'waterr': '4-6', 'soilr': '2-4', 'temp': '78', 'foliage': 'leafy', 'fertilizer': '6', 'lightrange': '1', 'heatzone': '2', 'id': '1', 'size': '8-12in'},{'water': '4', 'humid': '65', 'name': 'Houseplant', 'family': 'fern', 'light': '4', 'foliagecolor': '4', 'waterr': '6-7', 'soilr': '1-4', 'temp': '70', 'foliage': 'leafy', 'fertilizer': '7', 'lightrange': '1', 'heatzone': '2', 'id': '2', 'size': '24-46in'},{'water': '8', 'humid': '85', 'name': 'Mushroom', 'family': 'fungus', 'light': '2', 'foliagecolor': '8', 'waterr': '7-8', 'soilr': '3-3', 'temp': '85', 'foliage': 'fungus', 'fertilizer': '4', 'lightrange': '0', 'heatzone': '4', 'id': '3', 'size': '2-4in'},{'water': '3', 'humid': '55', 'name': 'PurpleLettuce', 'family': 'lettuce', 'light': '5', 'foliagecolor': '4', 'waterr': '4-6', 'soilr': '2-4', 'temp': '79', 'foliage': 'leafy', 'fertilizer': '6', 'lightrange': '1', 'heatzone': '12', 'id': '4', 'size': '6-8in'},]
+        List<String> idList = new ArrayList<String>();
+        //Log.e("DEBUG", "-----------------point 1");
+        String data = queryServer(Q_ALL_PLANTS);
+        //Log.e("DEBUG", "-----------------point 2");
         for (String item : data.split("\\},")) {
-            Log.e("DEBUG", "-----------------item " + item);
-            names.add(parsePlant(item, "name"));
-            Log.e("DEBUG", "-----------------added " + parsePlant(item, "name"));
+            //Log.e("DEBUG", "-----------------item " + item);
+            idList.add(parsePlant(item, "id"));
+            //Log.e("DEBUG", "-----------------added " + parsePlant(item, "name"));
         }
-        return names;
+        return idList;
+    }
+
+    static public String getPlantName(String id){
+        return parsePlant(queryServer(Q_PLANT + id), "name");
     }
 
     static public int getNumOfPlants(){
