@@ -21,8 +21,8 @@ urls = (
     #This is standard request format: /add/plant/name lightSens waterSens humidSens tempSens health waterTimer foliageColor 
     #                            E.G: host:8080/add/plant/Bean1 4 315 45 78 100 4560 5 
     '/add/plant/(.*)', 'add_plant',
-    #This is standard request format: /update/id lightS waterS humidS tempS health inTraining
-    #                            E.G: host:8080/update/plant/7 4 315 45 78 100 1
+    #This is standard request format: /update/id lightS waterS humidS tempS health 
+    #                            E.G: host:8080/update/plant/7 4 315 45 78 100
     '/update/plant/(.*)', 'update_plant',
     #This is standard request format: /update/current/id lightS waterS humidS tempS health inTraining
     #                            E.G: host:8080/update/current/7 4 315 45 78 100 1

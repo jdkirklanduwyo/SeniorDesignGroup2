@@ -11,7 +11,7 @@
 <plant foliageColor="1" health="77" humidSens="45" id="9" inTraining="0" lightSens="5" name="Bean9" tempSens="83" waterSens="0" waterTimer="200" />
 <plant foliageColor="1" health="96" humidSens="44" id="11" inTraining="0" lightSens="5" name="Bean11" tempSens="84" waterSens="3" waterTimer="200" />
 <plant foliageColor="5" health="92" humidSens="52" id="12" inTraining="0" lightSens="5" name="Bean1" tempSens="75" waterSens="425" waterTimer="4560" /></activeplants>
-<curplant foliageColor="1" health="100" humidSens="52" id="12" inTraining="0" lightSens="5" name="Bean2" tempSens="75" waterSens="425" waterTimer="200" />
+<curplant health="100" humidSens="52" id="12" inTraining="0" lightSens="5" name="Bean2" tempSens="75" waterSens="425" />
 <userscore score="0" />
 <settings humidFlag="0" lightFlag="0" tempFlag="0" waitFlag="0" waterFlag="0" />
 <pixy data="2 11 13" id="12" prevPixy="1 11" />
