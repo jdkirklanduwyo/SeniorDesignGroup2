@@ -48,9 +48,9 @@ urls = (
     #This is standard request format: /settings/waiting
     '/settings/waiting', 'sett_wait',
     #This is standard request format: /settings/waiting/[0(off) or 1(on)]
-    '/settings/waiting/(.*)', 'sett_waitset'
+    '/settings/waiting/(.*)', 'sett_waitset',
     #This is standard request format: /pixy/currentBlocks
-    '/pixy/currentBlocks', 'pixy_blocks'
+    '/pixy/currentBlocks', 'pixy_blocks',
     #This is standard request format: /pixy/currentBlocks/set/
     '/pixy/currentBlocks/set/(.*)', 'pixy_set'
 )
