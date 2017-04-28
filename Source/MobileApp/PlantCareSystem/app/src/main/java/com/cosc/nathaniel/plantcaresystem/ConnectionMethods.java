@@ -18,10 +18,25 @@ public class ConnectionMethods {
     static String Q_UPDATE_CURRENT = "/update/current/";
     static String Q_REMOVE = "/remove/plant/";
     static String Q_PLANT_NUM = "/plantcount";
+    static String Q_SET_SCORE = "/current/userscore/";
+    static String Q_GET_SCORE = "/current/userscore";
 
     private static String servIP = "192.168.0.30";
     private static String servPort = "8080";
-    private static int numOfPlants = 9;
+    private static int notifNum = 3;
+
+    static public boolean isConnected(){
+        ConnectTask connection = new ConnectTask();
+        String response = "";
+        try{
+            //make connection with server and pull data
+            response = connection.execute(servIP + ":" + servPort + Q_ALL_PLANTS).get();
+        } catch(Exception e){
+            Log.e("DEBUG", "Error in try connection in ConnectionMethods");
+            e.printStackTrace();
+        }
+        return !(response.equals("error"));
+    }
 
     static public String queryServer(String query){
         ConnectTask connection = new ConnectTask();
@@ -71,13 +86,14 @@ public class ConnectionMethods {
         return parsePlant(queryServer(Q_PLANT + id), "name");
     }
 
-    static public int getNumOfPlants(){
-        return Integer.parseInt(queryServer(Q_PLANT_NUM));
-    } //TODO: figure out why number of plants inaccurate
-
-    static public void setNumOfPlants(int numAdded){ numOfPlants += numAdded; }
+    static public String getCurrentPlantID(){
+        return parsePlant(queryServer(Q_CURRENT), "id");
+    }
 
     static public void setIP(String newIP){
         servIP = newIP;
     }
+
+    static public void setNotifNum(int num){notifNum = num;}
+    static public int getNotifNum(){return notifNum;}
 }

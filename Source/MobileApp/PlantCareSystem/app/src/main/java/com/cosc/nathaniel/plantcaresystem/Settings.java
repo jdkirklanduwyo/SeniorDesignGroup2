@@ -10,7 +10,7 @@ import android.widget.EditText;
 public class Settings extends AppCompatActivity implements View.OnClickListener{
 
     Button btn;
-    EditText etIP;
+    EditText etIP, etNotif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,15 +20,19 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
         btn = (Button) findViewById(R.id.btnSubmit);
         btn.setOnClickListener(this);
         etIP = (EditText) findViewById(R.id.etIP);
-
-        //TODO notification number
+        etNotif = (EditText) findViewById(R.id.etNotif);
     }
 
     @Override
     public void onClick(View v) {
+        //set fields in ConnectionMethods class
         String newIP = etIP.getText().toString();
         ConnectionMethods.setIP(newIP);
+        int notifNum = Integer.parseInt(etNotif.getText().toString());
+        ConnectionMethods.setNotifNum(notifNum);
+        //return to start screen
         Intent in = new Intent(v.getContext(), StartActivity.class);
         startActivity(in);
+        //TODO: store data to internal storage
     }
 }

@@ -39,8 +39,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Name"
             android:inputType="textPersonName" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/Spacer1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text=" "
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,12 +66,102 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnSetWater"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Set" />
+            android:text="Water" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/Spacer2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text=" "
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <TextView
+        android:id="@+id/txtFoliage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Select the color of this plant's healthy foliage:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/color1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_c0" />
+
+        <ImageButton
+            android:id="@+id/color2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_c1" />
+
+        <ImageButton
+            android:id="@+id/color3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_c2" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/color4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_c3" />
+
+        <ImageButton
+            android:id="@+id/color5"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_c4" />
+
+        <ImageButton
+            android:id="@+id/color6"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_c5" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/Spacer3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text=" "
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <Button
         android:id="@+id/btnAdd"

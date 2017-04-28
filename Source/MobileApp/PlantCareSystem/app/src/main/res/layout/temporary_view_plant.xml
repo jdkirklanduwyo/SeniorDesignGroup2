@@ -55,7 +55,7 @@
         android:text="&lt;" />
 
     <TextView
-        android:id="@+id/txtPlant"
+        android:id="@+id/txtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -67,7 +67,7 @@
         android:id="@+id/txtType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtPlant"
+        android:layout_below="@+id/txtName"
         android:layout_centerHorizontal="true"
         android:text="Bean Sprout" />
 

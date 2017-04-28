@@ -55,7 +55,7 @@
         android:text="&lt;" />
 
     <TextView
-        android:id="@+id/txtPlant"
+        android:id="@+id/txtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -64,21 +64,21 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView
-        android:id="@+id/txtName"
+        android:id="@+id/txtPlant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtPlant"
+        android:layout_below="@+id/txtName"
         android:layout_centerHorizontal="true"
         android:text="Bean Sprout" />
 
     <Button
-        android:id="@+id/btnRate"
+        android:id="@+id/btnHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="Rate Health" />
+        android:text="Home Menu" />
 
     <Button
         android:id="@+id/btnSetCurrent"

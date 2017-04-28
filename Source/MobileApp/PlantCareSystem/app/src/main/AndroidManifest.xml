@@ -3,14 +3,15 @@
     package="com.cosc.nathaniel.plantcaresystem">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_light"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".currentSensors" />
         <activity android:name=".Settings" />
         <activity android:name=".Database" />
@@ -23,7 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Rate"></activity>
+        <activity android:name=".Rate" />
+
+        <receiver
+            android:name=".NotificationManager"
+            android:process=":remote" />
+
+        <activity android:name=".FoliageActivity"></activity>
     </application>
 
-</manifest>
+</manifest> <!-- android:icon="@mipmap/ic_launcher" -->

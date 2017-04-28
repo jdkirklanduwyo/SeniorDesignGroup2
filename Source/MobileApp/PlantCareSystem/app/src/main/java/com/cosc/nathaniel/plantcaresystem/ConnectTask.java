@@ -21,8 +21,7 @@ public class ConnectTask extends AsyncTask<String, String, String>{
         try {
             //open connection to url
             url = new URL("http://" + params[0]);
-            urlConnection = (HttpURLConnection) url
-                    .openConnection();
+            urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.connect();
 
             //initialize input stream and stream reader
@@ -39,24 +38,16 @@ public class ConnectTask extends AsyncTask<String, String, String>{
                 respStr = respStr + current;
             }
 
-            //send response to log
-            //Log.e("DEBUG", "Server response is " + respStr);
-
         } catch (Exception e) {
-            //Log.e("DEBUG", "Error in try connection in ConnectTask");
+            Log.e("DEBUG", "Connection to server failed");
             e.printStackTrace();
+            respStr = "error";
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
-                //Log.e("DEBUG", "disconnected");
             }
         }
 
         return respStr;
     }
-
-    //Probably extraneous but I left it for now just in case
-    //method to pass coordinator object to main activity
-    //private AsyncCoordinator coord = new AsyncCoordinator();
-    //public AsyncCoordinator getCoord(){return coord;}
 }

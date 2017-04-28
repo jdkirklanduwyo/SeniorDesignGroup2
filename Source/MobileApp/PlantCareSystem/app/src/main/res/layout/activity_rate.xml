@@ -16,7 +16,8 @@
 
     <RadioGroup
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup">
 
         <RadioButton
             android:id="@+id/radioButton"
@@ -44,18 +45,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Humidity" />
+            android:text="Temperature" />
 
         <RadioButton
             android:id="@+id/radioButton5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Temperature" />
+            android:text="Humidity" />
     </RadioGroup>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit" />
