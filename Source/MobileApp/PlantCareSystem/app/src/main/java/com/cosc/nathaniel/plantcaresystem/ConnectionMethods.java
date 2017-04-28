@@ -20,6 +20,10 @@ public class ConnectionMethods {
     static String Q_PLANT_NUM = "/plantcount";
     static String Q_SET_SCORE = "/current/userscore/";
     static String Q_GET_SCORE = "/current/userscore";
+    static String Q_GET_SETTINGS = "/settings";
+    static String Q_SET_SETTINGS = "/settings/set/";
+    static String Q_GET_WAITING = "/settings/waiting";
+    static String Q_SET_WAITING = "/settings/waiting/";
 
     private static String servIP = "192.168.0.30";
     private static String servPort = "8080";
@@ -53,6 +57,7 @@ public class ConnectionMethods {
 
     static public String parsePlant(String data, String key){
         //data format: {'health': '100', 'humid': '45', 'id': '1', 'light': '4', 'ptype': '1', 'temp': '78', 'water': '3'}
+        //data format: {'tempFlag': '0', 'waitFlag': '0', 'waterFlag': '0', 'lightFlag': '0', 'humidFlag': '0'}
 
         //remove ' : { } from string
         data = data.replaceAll("'|:|\\{|\\}", "");

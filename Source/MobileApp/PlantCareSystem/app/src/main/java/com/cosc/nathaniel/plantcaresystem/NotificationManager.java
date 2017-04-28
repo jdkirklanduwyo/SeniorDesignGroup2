@@ -1,14 +1,10 @@
 package com.cosc.nathaniel.plantcaresystem;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
 public class NotificationManager extends BroadcastReceiver
 {
@@ -24,12 +20,13 @@ public class NotificationManager extends BroadcastReceiver
     }
 
     public void createNotification(Context context){
-        int fieldToChange = Integer.parseInt(ConnectionMethods.queryServer(ConnectionMethods.Q_GET_SCORE));
+        String tempFlag = ConnectionMethods.parsePlant(ConnectionMethods.queryServer(ConnectionMethods.Q_GET_SETTINGS), "tempFlag");
+        String humidFlag = ConnectionMethods.parsePlant(ConnectionMethods.queryServer(ConnectionMethods.Q_GET_SETTINGS), "humidFlag");
 
-        if(fieldToChange > 2) {
-            String message = "temperature";
-            if(fieldToChange > 3){
-                message = "humidity";
+        if(tempFlag.equals("1") || humidFlag.equals("1")) {
+            String message = "humidity";
+            if(tempFlag.equals("1")){
+                message = "temperature";
             }
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context)

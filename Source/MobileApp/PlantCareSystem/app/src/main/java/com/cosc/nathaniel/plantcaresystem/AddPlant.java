@@ -1,6 +1,7 @@
 package com.cosc.nathaniel.plantcaresystem;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +50,30 @@ public class AddPlant extends AppCompatActivity implements View.OnClickListener,
 
         etName = (EditText) findViewById(R.id.etName);
 
+        btnSetTimer.setEnabled(false);
+
+        //tell arduino to be ready
+        setArduinoAlertFlag();
+        int i = 0;
+        //wait for arduino response
+        while(!arduinoIsReady() && i < 100){
+            //wait 100ms
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {/*Do nothing*/}
+            }, 100);
+            //then increment
+            i++;
+        }
+
+        if(i>=100){
+            //arduino took too long to respond
+            Toast.makeText(this, "Error connecting to Arduino", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            btnSetTimer.setEnabled(true);
+        }
     }
 
     @Override
@@ -101,13 +127,42 @@ public class AddPlant extends AppCompatActivity implements View.OnClickListener,
     //listener for water timing button
     public boolean onTouch(View v, MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
-            //TODO: send water on and off to server
+            //send water on signl to arduino
+            setWaterFlag(1);
             //set time that touch occured
             touchTime = System.currentTimeMillis();
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            //send water off signal to arduino
+            setWaterFlag(0);
             //get time that release occured and calculate difference
             duration = System.currentTimeMillis() - touchTime;
         }
         return true;
     }
+
+    private void setArduinoAlertFlag() {
+        String settings = ConnectionMethods.queryServer(ConnectionMethods.Q_GET_SETTINGS);
+        String[] keys = {"lightFlag", "tempFlag", "humidFlag"};
+        String query = "0 ";
+        for(int i = 0; i < 3; i++){
+            query = query + ConnectionMethods.parsePlant(settings, keys[i]) + " ";
+        }
+        query = query + "1";
+        ConnectionMethods.queryServer(ConnectionMethods.Q_SET_SETTINGS + query);
+    }
+
+    private void setWaterFlag(int state) {
+        String settings = ConnectionMethods.queryServer(ConnectionMethods.Q_GET_SETTINGS);
+        String[] keys = {"lightFlag", "tempFlag", "humidFlag", "waitFlag"};
+        String query = state + " ";
+        for(int i = 0; i < 4; i++){
+            query = query + ConnectionMethods.parsePlant(settings, keys[i]) + " ";
+        }
+        ConnectionMethods.queryServer(ConnectionMethods.Q_SET_SETTINGS + query);
+    }
+
+    private boolean arduinoIsReady() {
+        return ConnectionMethods.queryServer(ConnectionMethods.Q_GET_WAITING).equals("1");
+    }
+
 }
