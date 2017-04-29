@@ -30,7 +30,6 @@
             android:name=".NotificationManager"
             android:process=":remote" />
 
-        <activity android:name=".FoliageActivity"></activity>
     </application>
 
 </manifest> <!-- android:icon="@mipmap/ic_launcher" -->

@@ -57,13 +57,12 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (v.equals(btnSettings)){
-            Log.e("DEBUG", ConnectionMethods.queryServer(ConnectionMethods.Q_GET_SETTINGS));
-            /*try {
+            try {
                 Intent in = new Intent(v.getContext(), Settings.class);
                 startActivity(in);
             } catch (Exception e) {
                 Log.e("DEBUG", "StartActivity: Failed to launch settings activity.");
-            }*/
+            }
         }
 
         else if (ConnectionMethods.isConnected()) {

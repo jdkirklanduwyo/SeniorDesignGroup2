@@ -11,8 +11,8 @@
         android:id="@+id/txtHeading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="What needs to be adjusted?"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        android:text="What most needs to be adjusted?"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <RadioGroup
         android:layout_width="wrap_content"

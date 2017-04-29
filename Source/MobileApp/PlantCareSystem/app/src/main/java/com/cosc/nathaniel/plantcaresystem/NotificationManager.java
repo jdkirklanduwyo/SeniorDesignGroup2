@@ -19,7 +19,7 @@ public class NotificationManager extends BroadcastReceiver
         wl.release();
     }
 
-    public void createNotification(Context context){
+    static public void createNotification(Context context){
         String tempFlag = ConnectionMethods.parsePlant(ConnectionMethods.queryServer(ConnectionMethods.Q_GET_SETTINGS), "tempFlag");
         String humidFlag = ConnectionMethods.parsePlant(ConnectionMethods.queryServer(ConnectionMethods.Q_GET_SETTINGS), "humidFlag");
 
