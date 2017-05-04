@@ -1,6 +1,5 @@
 import web
 import xml.etree.ElementTree as ET
-import webServThread.py
 
 tree = ET.parse('plant_data.xml')
 root = tree.getroot()
