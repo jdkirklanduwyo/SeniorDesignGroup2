@@ -1,19 +1,19 @@
 COSC 4950 - Senior Design - The Power of Robotany
 ================================================
 
-Group Members:
+**Group Members:**
 
 	-Jake Kirkland
 	-Kevin Shelton
 	-Nate Kuhn
 
-Project Name:
+**Project Name:**
 
-Modular Internet-of-Things Remote Server and Interface
+The Power of Robotany
 
-Description:
+**Description:**
 
-Our planned project is a remote service that will be running on a Raspberry Pi/Arduino or similar hardware that supports interaction with different types of sensors and devices. In addition to this server service, a client application will be designed to provide a streamlined and convenient way for the user to adjust and check the functions of the sensors and devices. We are also considering some Artificial Intelligence options to provide a learning facet to the server to further user convenience and hopefully ultimately remove the human factor from the equation. 
+Our project is a remote service that runs on an Arduino Uno that supports interaction with different types of sensors and devices. In addition to this, a server service was created that saves data from the arduino in an XML file, and allows the arduino to set settings from the XML. A client application for Android was designed to provide a streamlined and convenient way for the user to adjust and check the functions of the sensors and devices. We also used C.A.R.T. Artificial Intelligence decision trees to provide a learning facet to the server to further user convenience and hopefully ultimately remove the human factor from the equation. 
 	
 We will now delve into the following specifics:
 	
@@ -24,20 +24,32 @@ We will now delve into the following specifics:
 
 Our project contains the following files and folders:
 
-* **Documents:** Folder that will contain documents describing the project. 
+* **Documents:** Contains mainly our presentation information.  
 
-* **Source:** Folder that will contain all of our source code. Subdirectories will be organized by programming languages. 
+* **Source:** 
+In the Arduino folder, the required libraries and environment are located in arduino_pixy, arduino-1.6.12 and PixyMon. Our code is located in:
 
-We don't currently have any packages, however we do have a folder from the boiler plate for resources.
+	-SeniorDesignGroup2\Source\Arduino\ourSketches\ArduinoSketchFinal
+	
+ArduinoSketchFinal being the final iteration of our code. The MobileApp folder contains the project folder PlantCareSystem that can be opened in Android Studio for the full list of files, but the important Java and res classes are located in:
+
+	SeniorDesignGroup2\Source\MobileApp\PlantCareSystem\app\src\main\java\com\cosc\nathaniel\plantcaresystem
+	SeniorDesignGroup2\Source\MobileApp\PlantCareSystem\app\src\main\res\layout
+	
+For the python server, our code is located at:
+
+	SeniorDesignGroup2\Source\Python ReST Server	
+	
+And PythonWebServerFinal.py is our final code version. plant_data.xml is the xml file created by the server.
 
 * **Resources:** Resources will be included here, such as helpful websites and the like.
 
 Instructions for looking through the repo:
 
-* **Documents:** Start by looking through the documents we have prepared to describe our project. This folder currently only has the provided materials from the boiler-plate.
+* **Documents:** Check this for our presentation on our project.
 
-* **Source:** Continue on to the source folder if you wish to see the development of the code. Internal comments on the code will provide further explanation.
+* **Source:** Continue to the source folder for info on how the project works, there are three main components: Arduino, App and Python Server. Internal comments on the code will provide further explanation.
 
-* **Resources:** Visit this folder if you are looking for where we got information or ideas from. This will be our base of research and a place to gather all helpful materials for quick look-up. We have a couple of starter resources in this folder. See the README file within the Resources folder for a further description. 
+* **Resources:** Visit this folder if you are looking for where we got information or ideas from. See the README file within the Resources folder for a further description. 
 
-Navigation of the repo can be reflected with the previous points and will be expanded on when our project isn't empty. 
+* **To Run:** If you would actually like to build our project, you need the Arduino IDE with Pixy and DHT libraries imported to upload the sketch to an Arduino (Ensuring your local network info is placed into the sketch). Once the arduino is setup, use Android Studio to install the app onto an android device. Simply run the Python server on Python 2.7 or later on the specified computer on the local network and begin adding plants with the app.
