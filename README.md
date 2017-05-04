@@ -24,12 +24,12 @@ We will now delve into the following specifics:
 
 Our project contains the following files and folders:
 
-* **Documents:** Contains mainly our presentation information.  
+**Documents:** Contains mainly our presentation information.  
 
-* **Source:** 
+**Source:** 
 In the Arduino folder, the required libraries and environment are located in arduino_pixy, arduino-1.6.12 and PixyMon. Our code is located in:
 
-	-SeniorDesignGroup2\Source\Arduino\ourSketches\ArduinoSketchFinal
+	SeniorDesignGroup2\Source\Arduino\ourSketches\ArduinoSketchFinal
 	
 ArduinoSketchFinal being the final iteration of our code. The MobileApp folder contains the project folder PlantCareSystem that can be opened in Android Studio for the full list of files, but the important Java and res classes are located in:
 
@@ -42,7 +42,7 @@ For the python server, our code is located at:
 	
 And PythonWebServerFinal.py is our final code version. plant_data.xml is the xml file created by the server.
 
-* **Resources:** Resources will be included here, such as helpful websites and the like.
+**Resources:** Resources will be included here, such as helpful websites and the like.
 
 Instructions for looking through the repo:
 
