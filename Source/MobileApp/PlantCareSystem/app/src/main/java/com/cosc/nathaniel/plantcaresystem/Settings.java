@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+//this is the settings activity, which takes text input from the user and sets
+//variables in the ConnectionMethods class
 public class Settings extends AppCompatActivity implements View.OnClickListener{
 
     Button btn;
@@ -33,6 +35,5 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
         //return to start screen
         Intent in = new Intent(v.getContext(), StartActivity.class);
         startActivity(in);
-        //TODO: store data to internal storage
     }
 }

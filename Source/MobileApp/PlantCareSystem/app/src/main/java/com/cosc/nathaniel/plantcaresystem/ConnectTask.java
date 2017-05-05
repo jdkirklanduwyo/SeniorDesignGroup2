@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+// this is the AsyncTask which connects to the ReST server
 public class ConnectTask extends AsyncTask<String, String, String>{
 
     @Override
@@ -43,11 +43,13 @@ public class ConnectTask extends AsyncTask<String, String, String>{
             e.printStackTrace();
             respStr = "error";
         } finally {
+            //disconnect from server
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
         }
 
+        //return the server's response
         return respStr;
     }
 }

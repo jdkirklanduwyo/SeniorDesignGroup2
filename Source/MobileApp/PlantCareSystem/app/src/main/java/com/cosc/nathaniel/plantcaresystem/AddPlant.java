@@ -7,16 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
+//the add plant activity gets plant info from the user and send instruction to server to add the plant
+//then it returns to the StartActivity
 public class AddPlant extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
 
     Button btnAdd, btnSetTimer;
@@ -50,6 +47,7 @@ public class AddPlant extends AppCompatActivity implements View.OnClickListener,
 
         etName = (EditText) findViewById(R.id.etName);
 
+        //prevent click while arduino not ready
         btnSetTimer.setEnabled(false);
 
         //tell arduino to be ready
@@ -72,6 +70,7 @@ public class AddPlant extends AppCompatActivity implements View.OnClickListener,
             Toast.makeText(this, "Error connecting to Arduino", Toast.LENGTH_SHORT).show();
         }
         else {
+            //enable button
             btnSetTimer.setEnabled(true);
         }
     }
@@ -96,6 +95,7 @@ public class AddPlant extends AppCompatActivity implements View.OnClickListener,
                     colorID //foliage color
             );
             try {
+                //return to start activity
                 Intent in = new Intent(v.getContext(), StartActivity.class);
                 startActivity(in);
             } catch (Exception e) {
@@ -103,6 +103,7 @@ public class AddPlant extends AppCompatActivity implements View.OnClickListener,
             }
         }
 
+        //set colorID based on which color button clicked
         else if (v.equals(btn1)){
             colorID = 0;
         }
@@ -127,12 +128,12 @@ public class AddPlant extends AppCompatActivity implements View.OnClickListener,
     //listener for water timing button
     public boolean onTouch(View v, MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
-            //send water on signl to arduino
+            //send "water on" signal to arduino
             setWaterFlag(1);
             //set time that touch occured
             touchTime = System.currentTimeMillis();
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            //send water off signal to arduino
+            //send "water off" signal to arduino
             setWaterFlag(0);
             //get time that release occured and calculate difference
             duration = System.currentTimeMillis() - touchTime;
@@ -141,27 +142,33 @@ public class AddPlant extends AppCompatActivity implements View.OnClickListener,
     }
 
     private void setArduinoAlertFlag() {
+        //get current settings from server
         String settings = ConnectionMethods.queryServer(ConnectionMethods.Q_GET_SETTINGS);
         String[] keys = {"lightFlag", "tempFlag", "humidFlag"};
-        String query = "0 ";
-        for(int i = 0; i < 3; i++){
+        //format query to update settings
+        String query = "0 "; //set water flag to off to prevent accidental water release
+        for(int i = 0; i < 3; i++){//keep middle three flags what they were before
             query = query + ConnectionMethods.parsePlant(settings, keys[i]) + " ";
         }
-        query = query + "1";
+        query = query + "1"; //set alert flag to tell arduino to be ready
+        //send update query to server
         ConnectionMethods.queryServer(ConnectionMethods.Q_SET_SETTINGS + query);
     }
 
     private void setWaterFlag(int state) {
+        //get current settings from server
         String settings = ConnectionMethods.queryServer(ConnectionMethods.Q_GET_SETTINGS);
         String[] keys = {"lightFlag", "tempFlag", "humidFlag", "waitFlag"};
-        String query = state + " ";
-        for(int i = 0; i < 4; i++){
+        //format query to update settings
+        String query = state + " "; //set water flag to on or off, depending on parameter passed
+        for(int i = 0; i < 4; i++){ //leave the rest of the flags how they are
             query = query + ConnectionMethods.parsePlant(settings, keys[i]) + " ";
         }
+        //send update query to server
         ConnectionMethods.queryServer(ConnectionMethods.Q_SET_SETTINGS + query);
     }
 
-    private boolean arduinoIsReady() {
+    private boolean arduinoIsReady() { //check whether arduino is waiting for connection from app
         return ConnectionMethods.queryServer(ConnectionMethods.Q_GET_WAITING).equals("1");
     }
 

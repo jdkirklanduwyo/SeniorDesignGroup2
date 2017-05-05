@@ -1,15 +1,12 @@
 package com.cosc.nathaniel.plantcaresystem;
 
 import android.app.AlarmManager;
-import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.util.Calendar;
-import android.icu.util.GregorianCalendar;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.Date;
 
+//this is the home screen of the app. from here the user can go to settings, add plant, or view plants
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btnSettings, btnView, btnAdd;
@@ -36,8 +34,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         btnAdd.setOnClickListener(this);
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Log.e("DEBUG", "It's a high enough sdk version");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //alarm scheduler requires api 24
+            //schedule the specified number of alerts based on preset list of times
             int notifNum = ConnectionMethods.getNotifNum();
             int i = 0;
             if (i < notifNum){ scheduleAlarm(10, 0); }
@@ -56,7 +54,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if (v.equals(btnSettings)){
+        if (v.equals(btnSettings)){ //start settings activity
             try {
                 Intent in = new Intent(v.getContext(), Settings.class);
                 startActivity(in);
@@ -65,25 +63,25 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             }
         }
 
-        else if (ConnectionMethods.isConnected()) {
-            if (v.equals(btnAdd)) {
+        else if (ConnectionMethods.isConnected()) { //check whether connection is successful
+            if (v.equals(btnAdd)) { //start add plant activity
                 try {
                     Intent in = new Intent(v.getContext(), AddPlant.class);
                     startActivity(in);
                 } catch (Exception e) {
                     Log.e("DEBUG", "StartActivity: Failed to launch add activity.");
                 }
-            } else if (v.equals(btnView)) {
+            } else if (v.equals(btnView)) { //start view plants activity
                 try {
                     Intent in = new Intent(v.getContext(), MainActivity.class);
                     startActivity(in);
                 } catch (Exception e) {
-                    Log.e("DEBUG", "StartActivity: Failed to launch add activity.");
+                    Log.e("DEBUG", "StartActivity: Failed to launch view activity.");
                 }
             }
         }
 
-        else{
+        else{ //alert user that connection was unsuccessful
             Toast.makeText(this, "Error connecting to server", Toast.LENGTH_SHORT).show();
         }
     }
@@ -99,7 +97,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         cal_alarm.set(Calendar.HOUR_OF_DAY, hours);//set the alarm time
         cal_alarm.set(Calendar.MINUTE, minutes);
         cal_alarm.set(Calendar.SECOND, 0);
-        if(cal_alarm.before(cal_now)){//if it's in the past increment
+        if(cal_alarm.before(cal_now)){//if it's in the past, increment one day
             cal_alarm.add(Calendar.DATE,1);
         }
 

@@ -1,20 +1,18 @@
 package com.cosc.nathaniel.plantcaresystem;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
+//this activity lets the user view all plants in the system, delete plants, set which plant is the
+//current plant, and rate the health of the current plant
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     // view element variables
     Button btnHome, btnDelete, btnSetCurrent, btnRight, btnLeft;
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // instantiate textview
+        // instantiate textviews
         txtRating = (TextView) findViewById(R.id.textRating);
         txtPlant = (TextView) findViewById(R.id.txtPlant);
         txtName = (TextView) findViewById(R.id.txtName);
@@ -58,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //check which button clicked
         if (v.equals(btnHome)){
             try {
+                //return to start activity
                 Intent in = new Intent(v.getContext(), StartActivity.class);
                 startActivity(in);
             } catch (Exception e) {
@@ -76,9 +75,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("DEBUG", "MainActivity: Failed to launch new activity.");
             }
         }
-        else if (v.equals(btnSetCurrent)){
+        else if (v.equals(btnSetCurrent)){ //button changes from set current to rate if plant is the current plant
             if (isCurrentPlant()) {
                 try {
+                    //go to rate activity if plant is the current plant
                     Intent in = new Intent(v.getContext(), Rate.class);
                     startActivity(in);
                 } catch (Exception e) {
@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             else{
                 try {
+                    //if plant is not the current plant, set it as the current plant
+                    //send data on selected plant to server as current plant
                     String plantData = ConnectionMethods.queryServer(ConnectionMethods.Q_PLANT + idList.get(displayedPlantID));
                     ConnectionMethods.queryServer(ConnectionMethods.Q_UPDATE_CURRENT +
                             idList.get(displayedPlantID) + " " +
@@ -99,25 +101,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     );
                     //update current plant id
                     currentPlantID = ConnectionMethods.getCurrentPlantID();
+                    //update the message on button
                     setBtnRate();
                 } catch (Exception e) {
                     Log.e("DEBUG", "MainActivity: Failed to launch new activity.");
                 }
             }
         }
+
+        //switch to the next or previous plant
         else if (v.equals(btnRight)){
             switchPlant(1);
         }
         else if (v.equals(btnLeft)){
             switchPlant(-1);
         }
-    }
-
-    //TODO: update water timer
-
-    private String createXML(int id, String name, int light, int water, int humid, int temp){
-        return "<plant id=\"" + id + "\" name=\"" + name + "\" light=\"" + light + "\" water=\""
-                + water + "\" humid=\"" + humid + "\" temp=\"" + temp + "\"/>";
     }
 
     private int getRating(String id){
@@ -127,7 +125,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setRatingText(String id){
-        //set rating text
+        //sets the text field on screen to the rating from server, then colors according to rating
+        //set health rating text
         int ratingNum = getRating(id);
         txtRating.setText(Integer.toString(ratingNum) + "%");
         //set color of text to indicate rating
@@ -163,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             btnRight.setEnabled(true);
             btnRight.setVisibility(View.VISIBLE);
         }
+
         //set textview for plant id
         txtPlant.setText("Plant " + idList.get(displayedPlantID));
         txtName.setText(ConnectionMethods.getPlantName(idList.get(displayedPlantID)));
@@ -171,10 +171,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setBtnRate(){
+        //set text for set current plant
         char[] text = "Set as current plant".toCharArray();
         if(isCurrentPlant()){
+            //if it is current plant, set text for rate health
             text = "Rate health".toCharArray();
         }
+        //set button text
         btnSetCurrent.setText(text,0,text.length);
     }
 
